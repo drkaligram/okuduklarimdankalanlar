@@ -10,19 +10,17 @@
 
         /* --- CSS Değişkenleri (Tema) --- */
         :root {
-            --bg-main: #f8f8f4;       /* Ana arka plan (hafif kırık beyaz) */
-            --bg-card: #ffffff;       /* Kart/Alan arka planı (beyaz) */
-            --text-main: #333333;     /* Ana metin rengi */
-            --text-secondary: #666666; /* İkincil metin (tarih, kaynak vb.) */
-            --accent-primary: #a0522d; /* Ana vurgu rengi (Sienna - sıcak kahve) */
-            --accent-secondary: #cda374; /* İkincil vurgu (soluk altın/bej) */
-            --border-color: #e5e5e5;  /* Kenarlık rengi */
-            --shadow-color: rgba(100, 100, 100, 0.1); /* Gölge rengi */
+            --bg-main: #f8f8f4;
+            --bg-card: #ffffff;
+            --text-main: #333333;
+            --text-secondary: #666666;
+            --accent-primary: #a0522d;
+            --accent-secondary: #cda374;
+            --border-color: #e5e5e5;
+            --shadow-color: rgba(100, 100, 100, 0.1);
             --shadow-hover-color: rgba(100, 100, 100, 0.15);
-
             --font-body: 'Merriweather', serif;
             --font-heading: 'Poppins', sans-serif;
-
             --transition-speed: 0.3s;
         }
 
@@ -34,7 +32,7 @@
         }
 
         html {
-             scroll-behavior: smooth; /* Sayfa içi linklerde ve başa dön butonunda yumuşak kaydırma */
+             scroll-behavior: smooth;
         }
 
         body {
@@ -42,41 +40,52 @@
             line-height: 1.75;
             background-color: var(--bg-main);
             color: var(--text-main);
-            font-size: 16px; /* Temel font boyutu (mobil için iyi, masaüstünde artırılabilir) */
-            overflow-x: hidden;
+            font-size: 16px;
+            overflow-x: hidden; /* Yatay kaydırmayı kesinlikle engelle */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
+        /* --- Genel Görüntü Esnekliği --- */
+        img {
+            max-width: 100%; /* Resimlerin konteynerlarından taşmasını engelle */
+            height: auto; /* En-boy oranını koru */
+            display: block; /* Alt boşluk sorununu önle */
+        }
+
 
         /* --- Ana Layout (CSS Grid ile) --- */
         .container {
             max-width: 1200px;
             margin: 40px auto;
-            padding: 0 30px;
+            padding: 0 30px; /* Yan boşluklar */
             display: grid;
             grid-template-columns: 1fr 3fr; /* Yan sütun 1/4, ana içerik 3/4 */
             gap: 50px; /* Sütunlar arası boşluk */
+            transition: padding var(--transition-speed) ease, gap var(--transition-speed) ease; /* Boyutlandırma için yumuşak geçiş */
         }
 
         main {
-            grid-column: 2 / 3; /* Ana içerik 2. sütunda */
+            grid-column: 2 / 3;
+            min-width: 0; /* Flex/Grid item'larının taşmasını önlemek için */
         }
 
         aside {
-            grid-column: 1 / 2; /* Yan sütun 1. sütunda */
+            grid-column: 1 / 2;
             position: sticky;
             top: 40px;
-            align-self: start; /* Üstte sabit kalmasını sağlar */
+            align-self: start;
+            min-width: 0; /* Flex/Grid item'larının taşmasını önlemek için */
         }
 
         /* --- Başlık (Header) --- */
         header {
-            background: linear-gradient(135deg, var(--accent-primary), #7e4a2f); /* Gradient arka plan */
+            background: linear-gradient(135deg, var(--accent-primary), #7e4a2f);
             color: white;
             text-align: center;
             padding: 50px 20px;
             margin-bottom: 60px;
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%); /* Hafif altıgen şekil */
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
         }
 
         header h1 {
@@ -84,7 +93,7 @@
             font-size: 3em;
             font-weight: 700;
             letter-spacing: 1px;
-            margin-bottom: 10px; /* Sloganla arayı ayarla */
+            margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
@@ -112,18 +121,19 @@
         }
 
         #profil img#profil-foto {
-            width: 150px;
-            height: 150px;
+            /* max-width: 100% ve height: auto yukarıda genel img stili ile sağlandı */
+            width: 150px; /* Maksimum genişlik */
+            aspect-ratio: 1 / 1; /* Kare oranı (width ile height eşit) */
+            object-fit: cover; /* Görüntüyü kırparak sığdır */
             border-radius: 50%;
-            object-fit: cover;
-            border: 6px solid var(--bg-main); /* Arka plan rengiyle çerçeve */
-            box-shadow: 0 0 0 3px var(--accent-secondary), 0 4px 10px var(--shadow-color); /* Çift çerçeve ve gölge */
-            margin-bottom: 25px;
+            border: 6px solid var(--bg-main);
+            box-shadow: 0 0 0 3px var(--accent-secondary), 0 4px 10px var(--shadow-color);
+            margin: 0 auto 25px auto; /* Ortala ve alt boşluk */
             transition: transform var(--transition-speed) ease, filter var(--transition-speed) ease;
         }
         #profil img#profil-foto:hover {
              transform: scale(1.05);
-             filter: grayscale(30%); /* Hafif gri tonlama efekti */
+             filter: grayscale(30%);
         }
 
         #profil h3 {
@@ -144,98 +154,92 @@
         .blog-yazisi {
             background-color: var(--bg-card);
             margin-bottom: 50px;
-            padding: 45px; /* Daha ferah iç boşluk */
+            padding: 45px;
             border-radius: 8px;
             box-shadow: 0 5px 20px var(--shadow-color);
             border: 1px solid var(--border-color);
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow var(--transition-speed) ease;
-            position: relative; /* Pseudo elementler için */
-            overflow: hidden; /* Vurgu çizgisinin taşmasını engelle */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow var(--transition-speed) ease, padding var(--transition-speed) ease; /* Padding geçişi eklendi */
+            position: relative;
+            overflow: hidden;
         }
-        /* Gelişmiş Vurgu Çizgisi (Pseudo-element ile) */
         .blog-yazisi::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 8px; /* Kalın çizgi */
-            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary)); /* Gradient çizgi */
+            left: 0; top: 0; bottom: 0;
+            width: 8px;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
             transition: transform var(--transition-speed) ease;
-            transform: scaleY(0); /* Başlangıçta gizli */
+            transform: scaleY(0);
             transform-origin: bottom;
         }
         .blog-yazisi:hover::before {
-             transform: scaleY(1); /* Hover'da belirginleşir */
+             transform: scaleY(1);
              transform-origin: top;
         }
         .blog-yazisi:hover {
             box-shadow: 0 8px 25px var(--shadow-hover-color);
         }
 
-        /* JS ile eklenecek görünürlük sınıfı */
         .blog-yazisi.gorunur {
             opacity: 1;
             transform: translateY(0);
         }
-        /* Görünür olunca da çizgi görünsün */
          .blog-yazisi.gorunur::before {
              transform: scaleY(1);
-             transform-origin: bottom; /* Yavaşça aşağıdan yukarı açılsın */
-             transition-delay: 0.4s; /* Fade-in sonrası gecikmeli başlasın */
+             transform-origin: bottom;
+             transition-delay: 0.4s;
          }
 
         .blog-yazisi h2 {
             font-family: var(--font-heading);
             color: var(--text-main);
             margin-bottom: 12px;
-            font-size: 1.9em; /* Başlık boyutu */
+            font-size: 1.9em;
             font-weight: 700;
-            position: relative; /* Alt çizgi için */
-            padding-bottom: 15px; /* Çizgi için boşluk */
+            position: relative;
+            padding-bottom: 15px;
+            word-break: break-word; /* Uzun başlıkların taşmasını önle */
         }
-        /* Başlık Altı Çizgisi */
         .blog-yazisi h2::after {
             content: '';
             position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px; /* Kısa çizgi */
-            height: 3px;
+            left: 0; bottom: 0;
+            width: 50px; height: 3px;
             background-color: var(--accent-primary);
         }
-
 
         .blog-yazisi .tarih {
             font-family: var(--font-heading);
             color: var(--text-secondary);
             font-size: 0.9em;
-            margin-bottom: 30px; /* Tarih ile içerik arası boşluk */
+            margin-bottom: 30px;
             font-weight: 500;
         }
 
+        .blog-yazisi .icerik {
+             word-wrap: break-word; /* Uzun kelimelerin taşmasını önle */
+        }
         .blog-yazisi .icerik p {
             margin-bottom: 1.6em;
         }
 
          .blog-yazisi .icerik p::first-letter {
-            font-size: 2.5em; /* Daha dramatik ilk harf */
+            font-size: 2.5em;
             color: var(--accent-primary);
             font-weight: bold;
             margin-right: 0.08em;
             float: left;
-            line-height: 0.8; /* Harfi yukarı hizala */
+            line-height: 0.8;
             padding-right: 8px;
             padding-top: 6px;
-            font-family: var(--font-body); /* Serif fontu koru */
+            font-family: var(--font-body);
          }
 
-        /* Anekdot kaynağı */
         .blog-yazisi .kaynak {
             font-family: var(--font-heading);
-            font-style: normal; /* İtalik olmasın */
+            font-style: normal;
             font-size: 0.9em;
             color: var(--text-secondary);
             text-align: right;
@@ -243,70 +247,59 @@
             border-top: 1px solid var(--border-color);
             padding-top: 15px;
             font-weight: 500;
+            word-break: break-word; /* Uzun kaynak isimlerinin taşmasını önle */
         }
         .blog-yazisi .kaynak strong {
              color: var(--text-main);
-             font-weight: 700; /* Daha belirgin */
+             font-weight: 700;
         }
 
-        /* Alıntılar (Blockquote) */
          .blog-yazisi blockquote {
              margin: 25px 0;
-             padding: 20px 25px 20px 50px; /* Sol padding artırıldı */
-             background-color: #fdfaf4; /* Hafif farklı arka plan */
-             border-left: none; /* Standart sol kenarlık kaldırıldı */
+             padding: 20px 25px 20px 50px;
+             background-color: #fdfaf4;
+             border-left: none;
              position: relative;
              font-style: italic;
              color: #555;
              border-radius: 5px;
              box-shadow: inset 3px 3px 5px rgba(0,0,0,0.03);
+             word-wrap: break-word;
          }
-          /* Gelişmiş Alıntı İşareti (Pseudo-element) */
           .blog-yazisi blockquote::before {
-              content: '“'; /* Tırnak işareti */
+              content: '“';
               font-family: 'Merriweather', serif;
               position: absolute;
-              left: 15px;
-              top: 10px;
-              font-size: 3.5em; /* Büyük tırnak */
+              left: 15px; top: 10px;
+              font-size: 3.5em;
               color: var(--accent-secondary);
               line-height: 1;
               opacity: 0.8;
           }
           .blog-yazisi blockquote p { margin-bottom: 0.8em; }
           .blog-yazisi blockquote p:last-child { margin-bottom: 0; }
-          .blog-yazisi blockquote p::first-letter { /* Alıntıda ilk harf efekti olmasın */
-                all: unset;
-          }
+          .blog-yazisi blockquote p::first-letter { all: unset; }
 
-        /* Link Stilleri */
         a {
             color: var(--accent-primary);
             text-decoration: none;
             font-weight: bold;
             transition: color var(--transition-speed) ease;
             position: relative;
+             word-break: break-word; /* Linklerin taşmasını önle */
         }
-        /* Gelişmiş Alt Çizgi Efekti */
         a::after {
             content: '';
             position: absolute;
-            width: 100%;
-            height: 2px;
+            width: 100%; height: 2px;
             background-color: var(--accent-secondary);
-            bottom: -2px;
-            left: 0;
-            transform: scaleX(0); /* Başlangıçta gizli */
+            bottom: -2px; left: 0;
+            transform: scaleX(0);
             transform-origin: bottom right;
             transition: transform var(--transition-speed) ease-out;
         }
-        a:hover {
-            color: #d2691e; /* Hover'da biraz daha parlak kahve (Çikolata) */
-        }
-        a:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
+        a:hover { color: #d2691e; }
+        a:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
 
         /* --- Footer --- */
@@ -324,49 +317,51 @@
         /* --- Başa Dön Butonu --- */
         #basa-don {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
+            bottom: 30px; right: 30px;
+            width: 50px; height: 50px;
             background-color: var(--accent-primary);
             color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.5em; /* Ok boyutu */
-            text-align: center;
-            line-height: 50px; /* Oku dikeyde ortala */
+            border: none; border-radius: 50%;
+            font-size: 1.5em;
+            text-align: center; line-height: 50px;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            opacity: 0; /* Başlangıçta gizli */
-            visibility: hidden;
+            opacity: 0; visibility: hidden;
             transform: translateY(20px);
             transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease, transform var(--transition-speed) ease, background-color var(--transition-speed) ease;
             z-index: 1000;
         }
-        #basa-don.gorunur {
-            opacity: 0.8;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        #basa-don:hover {
-            opacity: 1;
-             background-color: #7e4a2f; /* Hover rengi */
-        }
+        #basa-don.gorunur { opacity: 0.8; visibility: visible; transform: translateY(0); }
+        #basa-don:hover { opacity: 1; background-color: #7e4a2f; }
 
 
-        /* --- Duyarlılık (Responsive Tasarım) --- */
+        /* ========================================== */
+        /* === DUYARLILIK (RESPONSIVE) AYARLARI === */
+        /* ========================================== */
+
+        /* Orta Boyutlu Ekranlar (Tabletler ve küçük laptoplar) */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 25px; /* Yan boşlukları biraz azalt */
+                gap: 40px; /* Sütun arası boşluğu biraz azalt */
+            }
+        }
+
+        /* Tabletler (1024px ve altı) - Tek sütuna geçiş */
         @media (max-width: 1024px) {
             .container {
                 grid-template-columns: 1fr; /* Tek sütuna düşür */
                 gap: 40px;
-                padding: 0 20px;
+                padding: 0 20px; /* Yan boşlukları daha da azalt */
                 margin-top: 30px;
             }
             aside {
                 grid-row: 1 / 2; /* Profil üste gelsin */
                 position: static; /* Sabitlemeyi kaldır */
-                width: 80%;
-                margin: 0 auto; /* Ortala */
+                width: 80%; /* Biraz kenar boşluğu kalsın */
+                max-width: 500px; /* Çok genişlemesini engelle */
+                margin: 0 auto 40px auto; /* Ortala ve alt boşluk */
+                padding: 30px; /* İç boşluğu ayarla */
             }
             main {
                 grid-row: 2 / 3; /* Yazılar alta gelsin */
@@ -375,25 +370,40 @@
              header h1 { font-size: 2.5em; }
         }
 
+        /* Küçük Tabletler ve Büyük Telefonlar (768px ve altı) */
         @media (max-width: 768px) {
-             body { font-size: 15px; }
-             .blog-yazisi { padding: 30px; }
-             .blog-yazisi h2 { font-size: 1.6em; }
-             #profil { width: 95%; padding: 30px;}
-             #profil img#profil-foto { width: 130px; height: 130px; }
+             body { font-size: 15px; } /* Genel fontu biraz küçült */
+             .container { padding: 0 15px; } /* Yan boşlukları minimuma indir */
+             .blog-yazisi {
+                 padding: 30px; /* İç boşluğu azalt */
+                 margin-bottom: 40px;
+             }
+             .blog-yazisi h2 { font-size: 1.6em; } /* Başlık boyutunu küçült */
+             aside {
+                 width: 95%; /* Neredeyse tam ekran */
+                 padding: 25px; /* İç boşluğu azalt */
+             }
+             #profil img#profil-foto {
+                 width: 130px; /* Fotoğrafı küçült */
+             }
              header h1 { font-size: 2.2em; }
              header .site-slogani { font-size: 1em; }
              #basa-don { width: 45px; height: 45px; line-height: 45px; font-size: 1.3em; bottom: 20px; right: 20px;}
         }
 
+        /* Küçük Telefonlar (480px ve altı) */
         @media (max-width: 480px) {
-             .container { padding: 0 15px; }
-             .blog-yazisi { padding: 25px; }
-              .blog-yazisi h2 { font-size: 1.4em; }
-               .blog-yazisi .icerik p::first-letter { font-size: 2em; padding-top: 4px;}
-               #profil { width: 100%; }
-               header { clip-path: none; padding: 30px 10px; } /* Küçük ekranda şekli kaldır */
-               header h1 { font-size: 1.8em; }
+            .blog-yazisi { padding: 20px 15px; } /* İç boşluğu daha da azalt */
+            .blog-yazisi h2 { font-size: 1.4em; padding-bottom: 10px;} /* Başlığı küçült */
+            .blog-yazisi h2::after { width: 40px; height: 2px; } /* Başlık altı çizgiyi ayarla */
+            .blog-yazisi .tarih { margin-bottom: 20px; }
+            .blog-yazisi .icerik p::first-letter { font-size: 2.2em; padding-top: 4px;} /* İlk harfi biraz küçült */
+            .blog-yazisi blockquote { padding: 15px 15px 15px 40px; } /* Alıntı iç boşlukları */
+            .blog-yazisi blockquote::before { font-size: 3em; left: 10px; top: 5px;} /* Alıntı tırnağını ayarla */
+            aside { width: 100%; border-radius: 0; border-left: none; border-right: none;} /* Kenar boşluksuz tam ekran */
+            header { clip-path: none; padding: 30px 10px; } /* Başlık şeklini kaldır */
+            header h1 { font-size: 1.8em; }
+            #profil img#profil-foto { width: 110px; } /* Fotoğrafı daha da küçült */
         }
 
         /* --- Gelişmiş Kaydırma Çubuğu --- */
@@ -416,7 +426,7 @@
             <img id="profil-foto" src="https://via.placeholder.com/150/a0522d/ffffff?text=Yazar" alt="Yazarın Profil Fotoğrafı">
             <h3>Yazar Hakkında</h3>
             <p>Buraya yazar hakkında kısa bir tanıtım yazısı eklenebilir. Okuma tutkusu, ilgi alanları ve blogun amacı hakkında bilgi verilebilir.</p>
-            </aside>
+        </aside>
 
         <main id="yazilar">
             <article class="blog-yazisi">
@@ -430,7 +440,8 @@
                     <p>Bu söz, karşılaştığımız zorluklara bakış açımızı değiştirebilecek nitelikte. Yazarın deneyimleri, umudun ve direncin en karanlık zamanlarda bile nasıl yeşerebileceğini <a href="#">gösteriyor</a>.</p>
                 </div>
                 <p class="kaynak">Kaynak: <strong>Örnek Anı Kitabı</strong>, Yazar Adı</p>
-                </article>
+            </article>
+
             <article class="blog-yazisi">
                 <h2>Seyahat Notlarından Bir Kesit</h2>
                 <p class="tarih">1 Nisan 2025</p>
@@ -443,7 +454,8 @@
                 </div>
                  <p class="kaynak">Kaynak: <strong>İstanbul Yazıları (Örnek)</strong>, Gezi Yazarı</p>
             </article>
-            </main>
+
+             </main>
     </div>
 
     <footer>
@@ -453,10 +465,8 @@
     <a href="#" id="basa-don" aria-label="Başa dön">↑</a>
 
     <script>
-        // --- JavaScript Kodları ---
         document.addEventListener('DOMContentLoaded', function() {
 
-            // --- Blog Yazılarını Scroll ile Fade-in Etme ---
             const blogYazilari = document.querySelectorAll('.blog-yazisi');
             if (blogYazilari.length > 0) {
                 const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
@@ -464,40 +474,23 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('gorunur');
-                            // İsteğe bağlı: Bir kere göründükten sonra izlemeyi bırak
-                            // observer.unobserve(entry.target);
                         }
-                        // İsteğe bağlı: Ekrandan çıkınca tekrar gizle
-                        // else { entry.target.classList.remove('gorunur'); }
                     });
                 }, observerOptions);
                 blogYazilari.forEach(yazi => { observer.observe(yazi); });
             }
 
-            // --- Başa Dön Butonu Kontrolü ---
             const basaDonButonu = document.getElementById('basa-don');
             if(basaDonButonu) {
                 window.addEventListener('scroll', function() {
-                    // Belirli bir miktar aşağı kaydırılınca butonu göster
-                    if (window.pageYOffset > 300) { // 300px aşağı inince
+                    if (window.pageYOffset > 300) {
                         basaDonButonu.classList.add('gorunur');
                     } else {
                         basaDonButonu.classList.remove('gorunur');
                     }
                 });
-
-                // Butona tıklayınca en başa git (HTML'de html { scroll-behavior: smooth; } ayarı gerekli)
-                 // Not: <a href="#"> zaten bunu yapıyor ama JS ile de kontrol edilebilir:
-                 /*
-                 basaDonButonu.addEventListener('click', function(e) {
-                      e.preventDefault(); // a etiketinin varsayılan davranışını engelle
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                 });
-                 */
             }
-
-            console.log("Okuduklarımdan Kalanlar scriptleri yüklendi!");
-
+            console.log("Okuduklarımdan Kalanlar scriptleri yüklendi! Boyutlandırma iyileştirmeleri yapıldı.");
         });
     </script>
 
