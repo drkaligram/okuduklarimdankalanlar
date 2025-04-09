@@ -5,61 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Okuduklarımdan Kalanlar</title>
     <style>
-        /* --- Fontlar --- */
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0;700;1,400&family=Nunito+Sans:wght@400;600;700;800&display=swap');
 
-        /* --- Değişkenler --- */
         :root {
-            /* Renkler (Açık Mod - Rize Esintisi) */
             --c-bg: #f8f9fa;
             --c-bg-alt: #ffffff;
             --c-text: #343a40;
             --c-text-light: #6c757d;
             --c-border: #e9ecef;
-            --c-accent1: #1da1a0; /* Turkuaz/Camgöbeği */
-            --c-accent2: #4caf50; /* Sakin Yeşil */
-            --c-accent3: #a16f4b; /* Ahşap/Toprak */
-            --c-shadow: rgba(0, 0, 0, 0.05);
-            --c-shadow-hover: rgba(0, 0, 0, 0.1);
+            --c-accent1: #1da1a0;
+            --c-accent2: #4caf50;
+            --c-accent3: #a16f4b;
+            --c-shadow: rgba(0, 0, 0, 0.04); /* İnceltildi */
+            --c-shadow-hover: rgba(0, 0, 0, 0.08); /* İnceltildi */
+            --c-shadow-scrolled: rgba(0, 0, 0, 0.06); /* Yeni: Header scroll gölgesi */
+            --c-white: #ffffff;
 
-            /* Tipografi */
             --ff-heading: 'Nunito Sans', sans-serif;
             --ff-body: 'Merriweather', serif;
-            --fs-base: 1rem;    /* 16px */
-            --fs-sm: 0.875rem; /* 14px */
-            --fs-lg: 1.125rem; /* 18px */
-            --fs-xl: 1.375rem; /* 22px */
-            --fs-2xl: 1.75rem; /* 28px */
-            --fs-3xl: 2.25rem; /* 36px */
-            --fs-4xl: 2.75rem; /* 44px */
+            --fs-base: 1rem;
+            --fs-sm: 0.875rem;
+            --fs-lg: 1.125rem;
+            --fs-xl: 1.375rem;
+            --fs-2xl: 1.75rem;
+            --fs-3xl: 2.25rem;
+            --fs-4xl: 2.75rem;
             --lh-base: 1.75;
             --fw-normal: 400; --fw-semibold: 600; --fw-bold: 700; --fw-extrabold: 800;
 
-            /* Boşluklar */
             --space-xs: 0.5rem; --space-sm: 0.75rem; --space-md: 1rem; --space-lg: 1.5rem;
             --space-xl: 2rem; --space-2xl: 2.5rem; --space-3xl: 3.5rem; --space-4xl: 5rem;
 
-            /* Diğer */
-            --radius: 8px; /* Daha yumuşak köşeler */
-            --transition: 0.25s ease-out;
+            --radius: 8px;
+            --transition: 0.3s ease-out; /* Biraz yavaşlatıldı */
             --container-width: 1140px;
         }
 
-        /* --- Koyu Mod Değişkenleri --- */
         body.dark-mode {
             --c-bg: #212529;
             --c-bg-alt: #343a40;
             --c-text: #e9ecef;
             --c-text-light: #adb5bd;
             --c-border: #495057;
-            --c-accent1: #20c997; /* Koyu modda daha canlı turkuaz */
-            --c-accent2: #6fbf73; /* Koyu modda daha canlı yeşil */
-            --c-accent3: #c8a17f; /* Koyu modda ahşap */
-            --c-shadow: rgba(0, 0, 0, 0.15);
-            --c-shadow-hover: rgba(0, 0, 0, 0.25);
+            --c-accent1: #20c997;
+            --c-accent2: #6fbf73;
+            --c-accent3: #c8a17f;
+            --c-shadow: rgba(0, 0, 0, 0.12); /* İnceltildi */
+            --c-shadow-hover: rgba(0, 0, 0, 0.20); /* İnceltildi */
+            --c-shadow-scrolled: rgba(0, 0, 0, 0.15); /* Yeni: Header scroll gölgesi */
         }
 
-        /* --- Genel Reset ve Temeller --- */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; font-size: 100%; }
         body {
@@ -69,56 +64,71 @@
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
             transition: background-color var(--transition), color var(--transition);
             padding-bottom: calc(var(--space-3xl) + var(--space-lg));
-            opacity: 0; /* Sayfa yükleme animasyonu için */
+            opacity: 0;
             animation: fadeInPage 0.5s ease-out 0.1s forwards;
         }
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        img { max-width: 100%; height: auto; display: block; border-radius: var(--radius); }
+        img { max-width: 100%; height: auto; display: block; border-radius: var(--radius); transition: transform var(--transition), filter var(--transition); }
         h1, h2, h3 { font-family: var(--ff-heading); line-height: 1.3; font-weight: var(--fw-bold); margin-bottom: var(--space-lg); color: var(--c-text); transition: color var(--transition); letter-spacing: -0.01em; }
         h1 { font-size: var(--fs-3xl); }
         h2 { font-size: var(--fs-2xl); }
         h3 { font-size: var(--fs-xl); font-weight: var(--fw-semibold); }
-        p { margin-bottom: var(--space-lg); max-width: 70ch; /* Satır uzunluğu */ }
-        a { color: var(--c-accent1); /* Ana vurgu turkuaz */ text-decoration: none; font-weight: var(--fw-semibold); transition: color var(--transition); }
-        a:hover { color: var(--c-accent2); /* Hover yeşil */}
+        p { margin-bottom: var(--space-lg); max-width: 70ch; }
+        a { color: var(--c-accent1); text-decoration: none; font-weight: var(--fw-semibold); transition: color var(--transition), opacity var(--transition); }
+        a:hover { color: var(--c-accent2); opacity: 0.85; }
         blockquote { margin: var(--space-xl) 0; padding: var(--space-lg); background-color: var(--c-bg-alt); border-left: 4px solid var(--c-accent2); font-style: italic; color: var(--c-text); border-radius: 0 var(--radius) var(--radius) 0; transition: background-color var(--transition), border-color var(--transition), color var(--transition); }
         blockquote p { margin-bottom: var(--space-sm); font-size: var(--fs-lg); max-width: none; }
         blockquote p:last-child { margin-bottom: 0; }
 
-        /* Odaklanma stilleri */
-        a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--c-accent1); outline-offset: 2px; box-shadow: none; border-radius: 3px; }
-        body.dark-mode a:focus-visible, body.dark-mode button:focus-visible, body.dark-mode input:focus-visible { outline-color: var(--c-accent1); }
+        a:focus-visible, button:focus-visible, input:focus-visible {
+             outline: 2px solid var(--c-accent1); outline-offset: 2px;
+             box-shadow: 0 0 0 4px rgba(var(--c-accent1-rgb, 29, 161, 160), 0.2); /* RGB Eklendi */
+             border-radius: 3px;
+        }
+         body.dark-mode a:focus-visible, body.dark-mode button:focus-visible, body.dark-mode input:focus-visible {
+             outline-color: var(--c-accent1);
+             box-shadow: 0 0 0 4px rgba(var(--c-accent1-dark-rgb, 32, 201, 151), 0.3); /* RGB Eklendi */
+         }
+         /* RGB değişkenleri için :root ve body.dark-mode içine ekleme */
+        :root { --c-accent1-rgb: 29, 161, 160; }
+        body.dark-mode { --c-accent1-dark-rgb: 32, 201, 151; }
 
-        /* --- Ana Layout --- */
+
         .container { width: 100%; max-width: var(--container-width); margin: 0 auto; padding: 0 var(--space-lg); }
         .main-wrapper { display: grid; gap: var(--space-2xl); margin-top: var(--space-2xl); }
 
-        /* --- Header --- */
-        .site-header { background-color: var(--c-bg-alt); padding: var(--space-md) 0; border-bottom: 1px solid var(--c-border); transition: background-color var(--transition), border-color var(--transition); position: sticky; top: -1px; /* 1px içerik altına gizler, scroll'da tam görünür */ z-index: 100; }
+        .site-header {
+            background-color: var(--c-bg-alt); padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--c-border);
+            transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition); /* Box-shadow eklendi */
+            position: sticky; top: -1px; z-index: 100;
+        }
+        .site-header.scrolled { /* Yeni */
+            box-shadow: 0 2px 10px var(--c-shadow-scrolled);
+            border-color: transparent;
+         }
         .site-header .container { display: flex; justify-content: space-between; align-items: center; }
         .site-header h1 { font-size: var(--fs-xl); margin-bottom: 0; font-weight: var(--fw-extrabold); letter-spacing: -0.03em; }
         .site-header h1 a { color: inherit; text-decoration: none; }
-        .site-slogani { font-size: var(--fs-sm); color: var(--c-text-light); margin-bottom: 0; display: none; /* Mobilde gizli */}
+        .site-slogani { font-size: var(--fs-sm); color: var(--c-text-light); margin-bottom: 0; display: none; }
 
-        /* --- Ana İçerik Alanı --- */
-        .main-content { grid-column: 1 / -1; /* Mobilde tam genişlik */ }
+        .main-content { grid-column: 1 / -1; }
 
-        /* --- Kenar Alanı (Profil, İçindekiler - Mobilde Gizli) --- */
-        .sidebar { display: none; position: sticky; top: calc(var(--space-xl) + 60px); /* Header yüksekliğine göre ayarla */ align-self: start; height: calc(100vh - var(--space-xl)*2 - 60px); overflow-y: auto; padding-right: var(--space-lg); /* Kaydırma çubuğu için */}
-        /* Custom scrollbar for sidebar */
+        .sidebar { display: none; position: sticky; top: calc(var(--space-xl) + 60px); align-self: start; height: calc(100vh - var(--space-xl)*2 - 60px); overflow-y: auto; padding-right: var(--space-lg); }
         .sidebar::-webkit-scrollbar { width: 6px; }
         .sidebar::-webkit-scrollbar-track { background: transparent; }
-        .sidebar::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 3px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 3px; transition: background-color var(--transition); }
+        .sidebar::-webkit-scrollbar-thumb:hover { background: var(--c-text-light); }
         body.dark-mode .sidebar::-webkit-scrollbar-thumb { background: var(--c-border); }
+        body.dark-mode .sidebar::-webkit-scrollbar-thumb:hover { background: var(--c-text-light); }
 
-        /* --- Profil Bölümü (Sidebar içinde) --- */
+
         .profil-widget { background-color: var(--c-bg-alt); padding: var(--space-lg); border-radius: var(--radius); border: 1px solid var(--c-border); text-align: center; margin-bottom: var(--space-xl); transition: background-color var(--transition), border-color var(--transition); }
-        .profil-foto { width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin: 0 auto var(--space-md) auto; border: 4px solid var(--c-bg); /* Hafif içe gömme efekti */ }
+        .profil-foto { width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin: 0 auto var(--space-md) auto; border: 4px solid var(--c-bg); transition: border-color var(--transition); }
         .profil-widget h3 { font-size: var(--fs-lg); margin-bottom: var(--space-xs); font-weight: var(--fw-bold); }
         .profil-widget p { font-size: var(--fs-sm); color: var(--c-text-light); line-height: 1.6; margin-bottom: 0; }
 
-        /* --- İçindekiler Bölümü (Sidebar içinde) --- */
         .toc-widget { padding-top: var(--space-lg); border-top: 1px solid var(--c-border); transition: border-color var(--transition); }
         .toc-widget h3 { font-size: var(--fs-base); color: var(--c-text-light); margin-bottom: var(--space-md); font-weight: var(--fw-semibold); letter-spacing: 0.02em; }
         .toc-widget ul { list-style: none; padding-left: 0; margin: 0; }
@@ -127,35 +137,44 @@
         .toc-widget a:hover { color: var(--c-accent1); padding-left: var(--space-xs); border-bottom-color: var(--c-accent1); opacity: 1; }
         body.dark-mode .toc-widget a:hover { color: var(--c-accent1); border-bottom-color: var(--c-accent1); }
 
-        /* --- Arama Kutusu --- */
         .search-wrapper { margin-bottom: var(--space-xl); position: relative; }
-        #search-input { width: 100%; padding: var(--space-sm) var(--space-lg); font-size: var(--fs-base); font-family: var(--ff-heading); border: 1px solid var(--c-border); border-radius: var(--radius); background-color: var(--c-bg-alt); color: var(--c-text); transition: all var(--transition); padding-left: calc(var(--space-lg) + var(--space-xl)); /* İkon için yer */}
-        .search-wrapper::before { /* Arama ikonu */ content: '🔍'; position: absolute; left: var(--space-lg); top: 50%; transform: translateY(-50%); color: var(--c-text-light); font-size: var(--fs-base); opacity: 0.6; z-index: 1; pointer-events: none; }
+        #search-input { width: 100%; padding: var(--space-sm) var(--space-lg); font-size: var(--fs-base); font-family: var(--ff-heading); border: 1px solid var(--c-border); border-radius: var(--radius); background-color: var(--c-bg-alt); color: var(--c-text); transition: all var(--transition); padding-left: calc(var(--space-lg) + var(--space-xl)); appearance: none; }
+        .search-wrapper::before { content: '🔍'; position: absolute; left: var(--space-lg); top: 50%; transform: translateY(-50%); color: var(--c-text-light); font-size: var(--fs-base); opacity: 0.6; z-index: 1; pointer-events: none; }
         #search-input::placeholder { color: var(--c-text-light); opacity: 0.7; }
-        #search-input:focus { border-color: var(--c-accent1); box-shadow: 0 0 0 3px rgba(32, 201, 151, 0.15); outline: none; background-color: var(--c-bg-alt); }
+        #search-input:focus {
+            border-color: var(--c-accent1);
+            box-shadow: 0 0 0 3px rgba(var(--c-accent1-rgb, 29, 161, 160), 0.15), inset 0 1px 2px rgba(0,0,0,0.05); /* İnce ayar */
+            outline: none; background-color: var(--c-bg-alt);
+        }
         body.dark-mode #search-input { background-color: var(--c-bg); border-color: var(--c-border); }
-        body.dark-mode #search-input:focus { border-color: var(--c-accent1); box-shadow: 0 0 0 3px rgba(32, 201, 151, 0.25); background-color: var(--c-bg); }
+        body.dark-mode #search-input:focus {
+            border-color: var(--c-accent1);
+            box-shadow: 0 0 0 3px rgba(var(--c-accent1-dark-rgb, 32, 201, 151), 0.25), inset 0 1px 2px rgba(0,0,0,0.1); /* İnce ayar */
+            background-color: var(--c-bg);
+        }
         .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
 
-        /* --- Blog Yazıları --- */
-        .article-list { /* Yazıları saran div */}
+        .article-list { }
         .blog-post {
             background-color: var(--c-bg-alt); padding: var(--space-xl); border-radius: var(--radius);
             margin-bottom: var(--space-2xl); border: 1px solid var(--c-border);
-            box-shadow: 0 4px 15px var(--c-shadow);
-            opacity: 0; transform: translateY(20px); /* Animasyon için */
+            box-shadow: 0 5px 15px var(--c-shadow); /* Hafifçe artırıldı */
+            opacity: 0; transform: translateY(20px);
             transition: opacity 0.5s ease-out, transform 0.5s ease-out, background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
         }
         .blog-post.visible { opacity: 1; transform: translateY(0); }
-        .blog-post:hover { box-shadow: 0 8px 25px var(--c-shadow-hover); transform: translateY(-2px); }
+        .blog-post:hover {
+             box-shadow: 0 10px 25px var(--c-shadow-hover); /* Hafifçe artırıldı */
+             transform: translateY(-4px); /* Biraz daha belirgin */
+        }
 
         .blog-post h2 { font-size: var(--fs-2xl); font-weight: var(--fw-bold); margin-bottom: var(--space-xs); letter-spacing: -0.02em;}
         .post-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm) var(--space-lg); margin-bottom: var(--space-lg); font-family: var(--ff-heading); font-size: var(--fs-sm); color: var(--c-text-light); border-bottom: 1px solid var(--c-border); padding-bottom: var(--space-md); transition: color var(--transition), border-color var(--transition); }
         .post-meta > span { display: inline-flex; align-items: center; gap: var(--space-xs); }
         .post-meta .ikon { width: 0.9em; height: 0.9em; opacity: 0.7; margin-right: 3px;}
-        .tags { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-left: auto; /* Sağa yasla */}
-        .tag { background-color: var(--c-bg); color: var(--c-accent2); /* Etiketler yeşil */ padding: var(--space-xs) var(--space-sm); border-radius: 4px; font-size: 0.75rem; font-weight: var(--fw-semibold); border: 1px solid transparent; transition: all var(--transition); text-transform: uppercase; letter-spacing: 0.05em; }
-        .tag:hover { background-color: var(--c-accent2); color: var(--c-white); }
+        .tags { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-left: auto; }
+        .tag { background-color: var(--c-bg); color: var(--c-accent2); padding: var(--space-xs) var(--space-sm); border-radius: 4px; font-size: 0.75rem; font-weight: var(--fw-semibold); border: 1px solid transparent; transition: all var(--transition); text-transform: uppercase; letter-spacing: 0.05em; }
+        .tag:hover { background-color: var(--c-accent2); color: var(--c-white); transform: scale(1.05); }
         body.dark-mode .tag { background-color: var(--c-bg-alt); color: var(--c-accent2); }
         body.dark-mode .tag:hover { background-color: var(--c-accent2); color: var(--c-bg); }
 
@@ -164,45 +183,49 @@
         .post-content p:first-of-type::first-letter { font-size: 3.2em; color: var(--c-accent1); font-weight: var(--fw-bold); margin-right: 0.08em; float: left; line-height: 0.8; padding: 0.1em 0.1em 0 0; font-family: var(--ff-heading); transition: color var(--transition); }
         .post-source { font-family: var(--ff-heading); font-style: normal; font-size: var(--fs-sm); color: var(--c-text-light); text-align: right; margin-top: var(--space-xl); border-top: 1px dashed var(--c-border); padding-top: var(--space-lg); font-weight: var(--fw-normal); word-break: break-word; transition: color var(--transition), border-color var(--transition); }
         .post-source strong { color: var(--c-text); font-weight: var(--fw-semibold); transition: color var(--transition); }
-        .post-image { margin: var(--space-lg) 0 var(--space-xl) 0; text-align: center; }
-        .post-image img { max-width: 100%; border-radius: var(--radius); box-shadow: 0 4px 15px var(--c-shadow); border: 1px solid var(--c-border); transition: box-shadow var(--transition), border-color var(--transition); }
+        .post-image { margin: var(--space-lg) 0 var(--space-xl) 0; text-align: center; overflow: hidden; border-radius: var(--radius); } /* Overflow hidden eklendi */
+        .post-image img {
+            max-width: 100%; border-radius: var(--radius);
+            box-shadow: 0 4px 15px var(--c-shadow); border: 1px solid var(--c-border);
+            transition: transform var(--transition), filter var(--transition), box-shadow var(--transition), border-color var(--transition); /* Filter eklendi */
+        }
+         .post-image:hover img { /* Hover efekti eklendi */
+             transform: scale(1.03);
+             filter: brightness(1.05);
+         }
 
         .post-share { margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px dashed var(--c-border); text-align: right; transition: border-color var(--transition); }
         .share-buttons button { background: none; border: 1px solid var(--c-border); color: var(--c-text-light); padding: var(--space-xs) var(--space-md); margin-left: var(--space-sm); border-radius: var(--radius); cursor: pointer; font-family: var(--ff-heading); font-size: var(--fs-sm); font-weight: var(--fw-medium); transition: all var(--transition); display: inline-flex; align-items: center; gap: var(--space-xs); }
         .share-buttons button svg { width: 1em; height: 1em; fill: currentColor; transition: transform var(--transition); }
-        .share-buttons button:hover { background-color: var(--c-bg); color: var(--c-accent1); border-color: var(--c-accent1); box-shadow: 0 2px 5px var(--c-shadow); }
+        .share-buttons button:hover { background-color: var(--c-bg); color: var(--c-accent1); border-color: var(--c-accent1); box-shadow: 0 2px 5px var(--c-shadow); transform: translateY(-1px); }
         .share-buttons button:hover svg { transform: scale(1.1); }
-        .share-buttons button:active { transform: scale(0.97); }
+        .share-buttons button:active { transform: scale(0.97); transition-duration: 0.1s; }
         body.dark-mode .share-buttons button { border-color: var(--c-border); color: var(--c-text-light); }
         body.dark-mode .share-buttons button:hover { background-color: var(--c-bg-alt); color: var(--c-accent1); border-color: var(--c-accent1); }
 
-        /* --- Footer --- */
         .site-footer { text-align: center; margin-top: var(--space-3xl); padding: var(--space-xl) var(--space-lg); font-size: var(--fs-sm); color: var(--c-text-light); border-top: 1px solid var(--c-border); background: none; transition: color var(--transition), border-color var(--transition); }
 
-        /* --- Sabit Butonlar --- */
         .fixed-button { position: fixed; bottom: var(--space-lg); width: 46px; height: 46px; background-color: var(--c-bg-alt); color: var(--c-text-light); border: 1px solid var(--c-border); border-radius: 50%; font-size: 1.2em; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 4px 12px var(--c-shadow); transition: all var(--transition); z-index: 1000; opacity: 0.8; }
         .fixed-button svg { width: 1.1em; height: 1.1em; fill: currentColor; transition: transform var(--transition); }
-        .fixed-button:hover { background-color: var(--c-bg); color: var(--c-text); transform: scale(1.05); box-shadow: 0 6px 16px var(--c-shadow-hover); opacity: 1;}
-        .fixed-button:active { transform: scale(0.96); }
+        .fixed-button:hover { background-color: var(--c-bg); color: var(--c-text); transform: scale(1.05) translateY(-2px); box-shadow: 0 6px 16px var(--c-shadow-hover); opacity: 1;}
+        .fixed-button:active { transform: scale(0.96); transition-duration: 0.1s; }
         body.dark-mode .fixed-button { background-color: var(--c-bg-alt); color: var(--c-text-light); border-color: var(--c-border); }
         body.dark-mode .fixed-button:hover { background-color: var(--c-bg); color: var(--c-text); }
 
         #theme-toggle { left: var(--space-lg); opacity: 0.8; visibility: visible; transform: none; }
-        #back-to-top { right: var(--space-lg); opacity: 0; visibility: hidden; transform: translateY(10px); }
+        #back-to-top { right: var(--space-lg); opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity var(--transition), visibility var(--transition), transform var(--transition), background-color var(--transition), color var(--transition), box-shadow var(--transition); } /* Visibility eklendi */
         #back-to-top.visible { opacity: 0.8; visibility: visible; transform: translateY(0); }
         #theme-toggle .icon-moon { display: none; }
         body.dark-mode #theme-toggle .icon-sun { display: none; }
         body.dark-mode #theme-toggle .icon-moon { display: block; }
 
-        /* ========================================== */
-        /* === TABLET VE ÜSTÜ (min-width: 768px) === */
-        /* ========================================== */
         @media (min-width: 768px) {
             :root { --fs-base: 1.0625rem; --fs-lg: 1.1875rem; --fs-xl: 1.5rem; --fs-2xl: 2rem; --fs-3xl: 2.5rem; --fs-4xl: 3rem; }
             .container { padding: 0 var(--space-xl); }
-            .site-header { padding: var(--space-lg) 0; margin-bottom: var(--space-3xl); }
+            .site-header { padding: var(--space-lg) 0; }
+             .site-header.scrolled { padding: var(--space-md) 0; } /* Scroll padding ayarı */
             .site-header h1 { font-size: var(--fs-2xl); }
-            .site-slogani { display: block; /* Sloganı göster */ }
+            .site-slogani { display: block; }
             .main-wrapper { gap: var(--space-3xl); margin-top: var(--space-3xl); }
             .blog-post { padding: var(--space-xl); margin-bottom: var(--space-3xl); }
             .post-meta { gap: var(--space-md) var(--space-xl); padding-bottom: var(--space-lg); margin-bottom: var(--space-xl);}
@@ -215,26 +238,19 @@
             .post-image img { max-width: 90%; }
         }
 
-        /* ================================================== */
-        /* === MASAÜSTÜ (min-width: 1024px) === */
-        /* ================================================== */
         @media (min-width: 1024px) {
-            .main-wrapper { grid-template-columns: 260px 1fr; /* Sidebar + Main */ gap: var(--space-2xl); }
-            .sidebar { display: block; /* Sidebar'ı göster */ grid-column: 1 / 2; }
+            .main-wrapper { grid-template-columns: 260px 1fr; gap: var(--space-2xl); }
+            .sidebar { display: block; grid-column: 1 / 2; }
             .main-content { grid-column: 2 / 3; }
-            .site-header { position: sticky; } /* Header yapışkan kalsın */
+            .site-header { position: sticky; }
         }
 
-        /* ===================================================== */
-        /* === GENİŞ MASAÜSTÜ (min-width: 1280px) === */
-        /* ===================================================== */
          @media (min-width: 1280px) {
             :root { --fs-base: 1.125rem; }
             .container { padding: 0 var(--space-2xl); }
             .main-wrapper { grid-template-columns: 300px 1fr; gap: var(--space-3xl); }
          }
 
-        /* --- Kaydırma Çubuğu --- */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--c-bg); transition: background-color var(--transition) ease;}
         ::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 5px; border: 2px solid var(--c-bg); transition: background-color var(--transition) ease, border-color var(--transition) ease; }
@@ -242,75 +258,89 @@
         body.dark-mode ::-webkit-scrollbar-thumb { background: var(--c-border); border-color: var(--c-bg); }
         body.dark-mode ::-webkit-scrollbar-thumb:hover { background: var(--c-text-light); }
 
-        /* --- Yazdırma Stilleri --- */
         @media print {
-            body { font-size: 11pt; line-height: 1.5; color: var(--c-black); background: none; padding-bottom: 0; animation: none; opacity: 1;}
+            body { font-size: 11pt; line-height: 1.5; color: #000; background: none; padding-bottom: 0; animation: none; opacity: 1;}
             .site-header, .sidebar, .site-footer, #back-to-top, .post-share, #theme-toggle, .blog-post::before, .tags, .fixed-button, .search-wrapper, .toc-widget { display: none; }
             .container { display: block; max-width: 100%; padding: 0; margin: 1cm; }
             main { width: 100%; } .main-wrapper { display: block; margin-top: 0;}
             .blog-post { box-shadow: none; border: none; padding: 0; margin-bottom: 1.5cm; page-break-inside: avoid; opacity: 1; transform: none; background: none;}
             .post-meta { margin-bottom: 1cm; font-size: 9pt; color: #555; border: none; padding-bottom: 5px;}
             .okuma-suresi, .tarih, .kelime-sayisi { display: inline; margin-right: 1cm; } .ikon { display: none; }
-            .blog-post h2 { font-size: 16pt; color: var(--c-black); padding-bottom: 0; margin-bottom: 0.5cm; border-bottom: none; }
+            .blog-post h2 { font-size: 16pt; color: #000; padding-bottom: 0; margin-bottom: 0.5cm; border-bottom: none; }
             blockquote { border-left: 3px solid #ccc; padding: 0.5cm 0.8cm; margin: 1cm 0; background: #f4f4f4; color: #333; font-style: italic; }
             a { color: #333; text-decoration: underline; } a::after { display: none; }
             .post-source { text-align: left; font-size: 9pt; color: #555; margin-top: 1cm; border-top: 1px solid #eee; padding-top: 0.5cm;}
-            .post-source strong { color: var(--c-black); }
+            .post-source strong { color: #000; }
             .post-image { text-align: left; margin: 1cm 0;} .post-image img { max-width: 70%; border: 1px solid #ccc; box-shadow: none; border-radius: 0;}
         }
     </style>
 </head>
-<body class=""> <header class="site-header">
+<body id="top" class="">
+    <header class="site-header">
         <div class="container">
-            <h1><a href="#top">Okuduklarımdan Kalanlar</a></h1> <p class="site-slogani">Satırlardan hayata süzülenler...</p>
+            <h1><a href="#top">Okuduklarımdan Kalanlar</a></h1>
+            <p class="site-slogani">Satırlardan hayata süzülenler...</p>
         </div>
     </header>
 
     <div class="container main-wrapper">
 
-<aside class="sidebar">
-    <div class="profil-widget">
-        <img class="profil-foto" src="profil.JPG" alt="Yazar Dursun Ali Yağcı'nın Profil Fotoğrafı">
-        <h3>Yazar Hakkında</h3>
-        <p>Emekli c.savcısı ve şu an Eskişehir Barosu'na kayıtlı avukat olan Dursun Ali Yağcı, tam bir kitap ve kalem aşığıdır. Hayatını hukuka adamış olsa da ruhunu tarih, edebiyat, şiir, teoloji ve hatırat okumalarıyla beslemektedir. Bu köşede birikimlerini ve düşüncelerini okurlarıyla paylaşmaktadır.</p>
-    </div>
-</aside>
+        <aside class="sidebar">
+            <div class="profil-widget">
+                <img class="profil-foto" src="profil.JPG" alt="Yazar Dursun Ali Yağcı'nın Profil Fotoğrafı">
+                <h3>Yazar Hakkında</h3>
+                <p>Emekli c.savcısı ve şu an Eskişehir Barosu'na kayıtlı avukat olan Dursun Ali Yağcı, tam bir kitap ve kalem aşığıdır. Hayatını hukuka adamış olsa da ruhunu tarih, edebiyat, şiir, teoloji ve hatırat okumalarıyla beslemektedir. Bu köşede birikimlerini ve düşüncelerini okurlarıyla paylaşmaktadır.</p>
+            </div>
+             <div class="toc-widget">
+                 <h3>İçindekiler</h3>
+                 <ul>
+                     <li><a href="#post-teoman-durali-hayat">Hayatın Dersi Avuçlarda</a></li>
+                     </ul>
+             </div>
+        </aside>
 
         <div class="main-content">
-
+             <div class="search-wrapper">
+                 <label for="search-input" class="visually-hidden">Yazılarda Ara</label>
+                 <input type="search" id="search-input" placeholder="Yazılarda ara...">
+             </div>
 
             <main class="article-list">
-<article class="blog-post" id="post-teoman-durali-hayat">
-    <h2>Hayatın Dersi Avuçlarda</h2>
-    <div class="post-meta">
-        <span class="tarih"><span class="ikon" aria-hidden="true">📅</span> 9 Nisan 2025</span>
-        <span class="okuma-suresi"><span class="ikon" aria-hidden="true">⏱️</span> ~1 dk</span>
-        <span class="kelime-sayisi"><span class="ikon" aria-hidden="true">📄</span> ~70</span>
-        <div class="tags">
-            <span class="tag">Teoman Duralı</span>
-            <span class="tag">Hayat</span>
-            <span class="tag">Doğa</span>
-            <span class="tag">Anlam</span>
-            <span class="tag">Yaratılış</span>
+                <article class="blog-post" id="post-teoman-durali-hayat">
+                    <h2>Hayatın Dersi Avuçlarda</h2>
+                    <div class="post-meta">
+                        <span class="tarih"><span class="ikon" aria-hidden="true">📅</span> 9 Nisan 2025</span>
+                        <span class="okuma-suresi"><span class="ikon" aria-hidden="true">⏱️</span></span>
+                        <span class="kelime-sayisi"><span class="ikon" aria-hidden="true">📄</span></span>
+                        <div class="tags">
+                            <span class="tag">Teoman Duralı</span>
+                            <span class="tag">Hayat</span>
+                            <span class="tag">Doğa</span>
+                            <span class="tag">Anlam</span>
+                            <span class="tag">Yaratılış</span>
+                        </div>
+                    </div>
+                    <div class="post-image">
+                        <img src="kuzular.jpg" alt="İki küçük beyaz oğlak veya kuzu kucaklayan yaşlı adam">
+                    </div>
+                    <div class="post-content">
+                        <p>Prof. Dr. Teoman Duralı ne de güzel özetler: "Hayatında bir fidanın olgunlaşmasını izlememiş, bir kuzunun doğumuna şahit olmamış çocuklara Allah'ı anlatmaya çalışıyoruz." Bu fotoğraf, o sözlerin sıcaklığını taşıyor sanki.</p>
+                        <p>Yaşlı ellerde, yeni doğmuş iki can... Beton duvarlar arasında kaybolan nesillere, hayatın kendisinin en büyük öğretmen olduğunu fısıldıyor bu kare. Toprağın bereketi, bir kuzunun masumiyeti, bir fidanın yeşermesi... İşte bunlar, varoluşun dilini, Yaratıcı'nın sanatını bize en yalın haliyle anlatan mucizeler. Bu tanıklık olmadan, o büyük anlamı kavramak ne mümkün?</p>
+                    </div>
+                    <div class="post-share">
+                        <div class="share-buttons">
+                            <button class="share-link" aria-label="Yazı linkini kopyala"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>Link</button>
+                            <button class="share-twitter" aria-label="Twitter'da paylaş"><svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.01-.06C3.44 19.89 5.64 20.5 7.99 20.5 16 20.5 20.56 14 20.56 8.52c0-.21 0-.42-.02-.63.84-.6 1.57-1.36 2.14-2.23z"/></svg>Tweet</button>
+                        </div>
+                    </div>
+                </article>
+
+             </main>
+             <div id="arama-sonuc-mesaji" style="display:none; text-align: center; margin-top: var(--space-xl); color: var(--c-text-light);"></div>
         </div>
     </div>
-    <div class="post-image">
-        <img src="kuzular.jpg" alt="İki küçük beyaz oğlak veya kuzu kucaklayan yaşlı adam">
-    </div>
-    <div class="post-content">
-        <p>Prof. Dr. Teoman Duralı ne de güzel özetler: "Hayatında bir fidanın olgunlaşmasını izlememiş, bir kuzunun doğumuna şahit olmamış çocuklara Allah'ı anlatmaya çalışıyoruz." Bu fotoğraf, o sözlerin sıcaklığını taşıyor sanki.</p>
-        <p>Yaşlı ellerde, yeni doğmuş iki can... Beton duvarlar arasında kaybolan nesillere, hayatın kendisinin en büyük öğretmen olduğunu fısıldıyor bu kare. Toprağın bereketi, bir kuzunun masumiyeti, bir fidanın yeşermesi... İşte bunlar, varoluşun dilini, Yaratıcı'nın sanatını bize en yalın haliyle anlatan mucizeler. Bu tanıklık olmadan, o büyük anlamı kavramak ne mümkün?</p>
-    </div>
-     <div class="post-share">
-          <div class="share-buttons">
-              <button class="share-link" aria-label="Yazı linkini kopyala"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>Link</button>
-              <button class="share-twitter" aria-label="Twitter'da paylaş"><svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.01-.06C3.44 19.89 5.64 20.5 7.99 20.5 16 20.5 20.56 14 20.56 8.52c0-.21 0-.42-.02-.63.84-.6 1.57-1.36 2.14-2.23z"/></svg>Tweet</button>
-          </div>
-     </div>
-</article>
-          
-                 </main>
-        </div> </div> <footer class="site-footer">
+
+    <footer class="site-footer">
         <p>&copy; 2025 Okuduklarımdan Kalanlar | Tüm hakları saklıdır.</p>
     </footer>
 
@@ -324,55 +354,64 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            /**
-             * Tahmini Okuma Süresi ve Kelime Sayısı Hesaplama
-             */
             try {
-                const wpm = 230; // Ortalama okuma hızı biraz artırıldı
-                document.querySelectorAll('.blog-post').forEach(yazi => { // .blog-post olarak güncellendi
-                    const icerikDiv = yazi.querySelector('.post-content'); // .post-content olarak güncellendi
+                const wpm = 230;
+                document.querySelectorAll('.blog-post').forEach(yazi => {
+                    const icerikDiv = yazi.querySelector('.post-content');
                     const okumaSuresiSpan = yazi.querySelector('.okuma-suresi');
                     const kelimeSayisiSpan = yazi.querySelector('.kelime-sayisi');
 
                     if (icerikDiv && okumaSuresiSpan && kelimeSayisiSpan) {
                         const text = icerikDiv.textContent || "";
                         const kelimeSayisi = text.trim().split(/\s+/).filter(Boolean).length;
-                        const dakika = Math.ceil(kelimeSayisi / wpm);
+                        const dakika = Math.max(1, Math.ceil(kelimeSayisi / wpm)); // Minimum 1 dakika
 
-                        // Okuma süresini ekle
                         const sureTextNode = document.createTextNode(` ${dakika} dk okuma`);
-                        if (okumaSuresiSpan.childNodes.length > 0 && okumaSuresiSpan.childNodes[0].nodeType === Node.ELEMENT_NODE) {
-                            okumaSuresiSpan.appendChild(sureTextNode);
-                        } else { okumaSuresiSpan.textContent += ` ${dakika} dk okuma`; }
+                        const iconSure = okumaSuresiSpan.querySelector('.ikon');
+                        if(iconSure) okumaSuresiSpan.appendChild(sureTextNode);
+                        else okumaSuresiSpan.textContent += ` ${dakika} dk okuma`;
 
-                        // Kelime sayısını ekle
                         const kelimeTextNode = document.createTextNode(` ${kelimeSayisi} kelime`);
-                         if (kelimeSayisiSpan.childNodes.length > 0 && kelimeSayisiSpan.childNodes[0].nodeType === Node.ELEMENT_NODE) {
-                            kelimeSayisiSpan.appendChild(kelimeTextNode);
-                        } else { kelimeSayisiSpan.textContent += ` ${kelimeSayisi} kelime`; }
+                        const iconKelime = kelimeSayisiSpan.querySelector('.ikon');
+                         if(iconKelime) kelimeSayisiSpan.appendChild(kelimeTextNode);
+                        else kelimeSayisiSpan.textContent += ` ${kelimeSayisi} kelime`;
                     }
                 });
             } catch (error) { console.error("Okuma/Kelime sayısı hesaplanırken hata:", error); }
 
-             /**
-              * Sosyal Paylaşım Butonları
-              */
-             try {
-                document.querySelectorAll('.post-share').forEach(container => { // .post-share olarak güncellendi
-                    const yaziElementi = container.closest('article.blog-post'); // .blog-post eklendi
+
+            try {
+                document.querySelectorAll('.post-share').forEach(container => {
+                    const yaziElementi = container.closest('article.blog-post');
                     const yaziId = yaziElementi ? yaziElementi.id : null;
                     const yaziBasligi = yaziElementi ? (yaziElementi.querySelector('h2')?.textContent.trim() || document.title) : document.title;
-                    const linkKopyalaButon = container.querySelector('.share-link'); // class adı güncellendi
-                    const twitterButon = container.querySelector('.share-twitter'); // class adı güncellendi
+                    const linkKopyalaButon = container.querySelector('.share-link');
+                    const twitterButon = container.querySelector('.share-twitter');
 
                     if (linkKopyalaButon && yaziId) {
                         linkKopyalaButon.addEventListener('click', (e) => {
                             const button = e.currentTarget;
                             const urlToCopy = `${window.location.origin}${window.location.pathname}#${yaziId}`;
+                            const originalContent = button.innerHTML;
+                            const originalBg = button.style.backgroundColor;
+                            const originalColor = button.style.color;
+
                             navigator.clipboard.writeText(urlToCopy).then(() => {
-                                const originalContent = button.innerHTML; button.textContent = 'Kopyalandı!'; button.disabled = true;
-                                setTimeout(() => { button.innerHTML = originalContent; button.disabled = false; }, 2500);
-                            }).catch(err => { console.error('Link kopyalanamadı: ', err); });
+                                button.textContent = 'Kopyalandı!';
+                                button.style.backgroundColor = 'var(--c-accent2)';
+                                button.style.color = 'var(--c-white)';
+                                button.disabled = true;
+                                setTimeout(() => {
+                                    button.innerHTML = originalContent;
+                                    button.style.backgroundColor = originalBg;
+                                     button.style.color = originalColor;
+                                    button.disabled = false;
+                                }, 2500);
+                            }).catch(err => {
+                                console.error('Link kopyalanamadı: ', err);
+                                button.textContent = 'Hata!';
+                                setTimeout(() => { button.innerHTML = originalContent; }, 2000);
+                             });
                         });
                     }
                     if (twitterButon && yaziId) {
@@ -385,66 +424,68 @@
                 });
             } catch (error) { console.error("Paylaşım butonları hatası:", error); }
 
-            /**
-            // --- Koyu Mod ---
-            const temaButonu = document.getElementById('tema-degistir');
-            const body = document.body;
-            const tercihEdilenTema = localStorage.getItem('tema');
-             function applyTheme(tema) {
-                 const sistemTercihiKoyu = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                 if (tema === 'dark' || (!tema && sistemTercihiKoyu)) { body.classList.add('dark-mode'); }
-                 else { body.classList.remove('dark-mode'); }
-             }
-             applyTheme(tercihEdilenTema);
-            if (temaButonu) {
-                temaButonu.addEventListener('click', () => {
-                    body.classList.toggle('dark-mode');
-                    const yeniTema = body.classList.contains('dark-mode') ? 'dark' : 'light';
-                    localStorage.setItem('tema', yeniTema);
-                });
-                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                     if (!localStorage.getItem('tema')) { applyTheme(e.matches ? 'dark' : 'light'); }
-                 });
-            }
 
-            // --- Başa Dön Butonu Görünürlüğü ---
-            const basaDonButonu = document.getElementById('basa-don');
-            if(basaDonButonu) {
-                 const scrollObserver = new IntersectionObserver(entries => {
-                     entries.forEach(entry => { basaDonButonu.classList.toggle('gorunur', entry.boundingClientRect.bottom < window.innerHeight * 0.5); }); // Yarıya gelince göster
-                 }, { threshold: [0] });
-                 const mainElement = document.querySelector('main');
-                 if(mainElement) scrollObserver.observe(mainElement);
-                 else { /* Fallback: eski yöntem */
-                      window.addEventListener('scroll', function() { basaDonButonu.classList.toggle('gorunur', window.pageYOffset > 400); });
-                 }
-            }
-
-            /**
-             * Yazıların Görünürlük Animasyonu (Scroll ile)
-             */
             try {
-                const animasyonElementleri = document.querySelectorAll('.blog-post'); // .blog-post olarak güncellendi
-                if (animasyonElementleri.length > 0) {
-                    const animObserverOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.05 }; // Daha erken tetiklensin
+                const temaButonu = document.getElementById('theme-toggle');
+                const body = document.body;
+                const tercihEdilenTema = localStorage.getItem('tema');
+
+                function applyTheme(tema) {
+                    const sistemTercihiKoyu = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    if (tema === 'dark' || (!tema && sistemTercihiKoyu)) { body.classList.add('dark-mode'); }
+                    else { body.classList.remove('dark-mode'); }
+                }
+
+                applyTheme(tercihEdilenTema);
+
+                if (temaButonu) {
+                    temaButonu.addEventListener('click', () => {
+                        body.classList.toggle('dark-mode');
+                        const yeniTema = body.classList.contains('dark-mode') ? 'dark' : 'light';
+                        localStorage.setItem('tema', yeniTema);
+                    });
+
+                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                        if (!localStorage.getItem('tema')) { applyTheme(e.matches ? 'dark' : 'light'); }
+                    });
+                }
+            } catch (error) { console.error("Tema değiştirme hatası:", error); }
+
+
+            try {
+                const basaDonButonu = document.getElementById('back-to-top');
+                if (basaDonButonu) {
+                     window.addEventListener('scroll', function() {
+                         basaDonButonu.classList.toggle('visible', window.scrollY > 400);
+                     }, { passive: true }); // Passive listener for better scroll performance
+                }
+            } catch (error) { console.error("Başa dön butonu hatası:", error); }
+
+
+            try {
+                const animasyonElementleri = document.querySelectorAll('.blog-post');
+                if (animasyonElementleri.length > 0 && 'IntersectionObserver' in window) {
+                    const animObserverOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.05 };
                     const animObserver = new IntersectionObserver((entries, observer) => {
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {
                                 entry.target.classList.add('visible');
-                                observer.unobserve(entry.target); // Bir kere görününce izlemeyi bırak
+                                observer.unobserve(entry.target);
                             }
                         });
                     }, animObserverOptions);
                     animasyonElementleri.forEach(element => { animObserver.observe(element); });
-                }
+                } else {
+                     // Fallback if IntersectionObserver is not supported (older browsers)
+                    animasyonElementleri.forEach(element => element.classList.add('visible'));
+                 }
             } catch (error) { console.error("Scroll animasyonu hatası:", error); }
 
-            /**
-             * Sayfa İçi Arama/Filtreleme
-             */
+
             try {
-                const aramaInput = document.getElementById('search-input'); // ID güncellendi
-                const tumYazilar = document.querySelectorAll('.blog-post'); // .blog-post olarak güncellendi
+                const aramaInput = document.getElementById('search-input');
+                const tumYazilar = document.querySelectorAll('.blog-post');
+                const sonucMesaji = document.getElementById('arama-sonuc-mesaji');
 
                 if (aramaInput && tumYazilar.length > 0) {
                     aramaInput.addEventListener('input', function(e) {
@@ -454,31 +495,32 @@
                         tumYazilar.forEach(yazi => {
                             const baslik = yazi.querySelector('h2')?.textContent.toLowerCase() || '';
                             const icerik = yazi.querySelector('.post-content')?.textContent.toLowerCase() || '';
-                            const etiketler = Array.from(yazi.querySelectorAll('.tag')).map(el => el.textContent.toLowerCase()).join(' '); // class adı tag oldu
+                            const etiketler = Array.from(yazi.querySelectorAll('.tag')).map(el => el.textContent.toLowerCase()).join(' ');
 
-                            if (baslik.includes(aramaTerimi) || icerik.includes(aramaTerimi) || etiketler.includes(aramaTerimi)) {
-                                yazi.style.display = ''; // Eşleşiyorsa göster
-                                gorunenYaziSayisi++;
-                            } else {
-                                yazi.style.display = 'none'; // Eşleşmiyorsa gizle
-                            }
+                            const isMatch = aramaTerimi === '' || baslik.includes(aramaTerimi) || icerik.includes(aramaTerimi) || etiketler.includes(aramaTerimi);
+                             yazi.style.display = isMatch ? '' : 'none';
+                             if(isMatch) gorunenYaziSayisi++;
                         });
 
-                        // Opsiyonel: Eğer hiç sonuç bulunamazsa bir mesaj gösterilebilir
-                        // const sonucMesaji = document.getElementById('arama-sonuc-mesaji');
-                        // if (sonucMesaji) {
-                        //     sonucMesaji.textContent = gorunenYaziSayisi === 0 ? 'Aramanızla eşleşen yazı bulunamadı.' : '';
-                        //     sonucMesaji.style.display = gorunenYaziSayisi === 0 ? 'block' : 'none';
-                        // }
+                        if (sonucMesaji) {
+                            sonucMesaji.textContent = gorunenYaziSayisi === 0 && aramaTerimi !== '' ? 'Aramanızla eşleşen yazı bulunamadı.' : '';
+                             sonucMesaji.style.display = gorunenYaziSayisi === 0 && aramaTerimi !== '' ? 'block' : 'none';
+                        }
                     });
                 }
-                 // Opsiyonel: Arama sonucu mesajı için HTML'e <p id="arama-sonuc-mesaji" style="display:none;"></p> eklenebilir.
+             } catch (error) { console.error("Arama/filtreleme hatası:", error); }
 
-            } catch (error) { console.error("Arama/filtreleme hatası:", error); }
+             // Header'a scroll gölgesi ekleme
+             try {
+                 const header = document.querySelector('.site-header');
+                 if(header) {
+                    window.addEventListener('scroll', () => {
+                         header.classList.toggle('scrolled', window.scrollY > 10);
+                     }, { passive: true });
+                 }
+             } catch (error) { console.error("Header scroll efekti hatası:", error); }
 
-            console.log("Okuduklarımdan Kalanlar scriptleri yüklendi! Yeni Tasarım.");
-
-        }); // DOMContentLoaded sonu
+        });
     </script>
 
 </body>
