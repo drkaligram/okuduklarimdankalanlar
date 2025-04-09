@@ -8,13 +8,15 @@
         /* --- Font İçe Aktarma --- */
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;500;700&display=swap');
 
-        /* --- CSS Değişkenleri (Karadeniz Yeşil Tema) --- */
+        /* --- CSS Değişkenleri (Karadeniz Yeşil Tema - Açık Mod Varsayılan) --- */
         :root {
             --bg-main: #f4f9f4;
             --bg-card: #ffffff;
             --bg-aside: #fafdfa;
+            --bg-code: #f0f0f0; /* Kod blokları için */
             --text-main: #1f3a1f;
             --text-secondary: #4a6f4a;
+            --text-blockquote: #556b55;
             --accent-primary: #006400;
             --accent-secondary: #2E8B57;
             --accent-wood: #8B4513;
@@ -26,6 +28,24 @@
             --font-heading: 'Poppins', sans-serif;
             --transition-speed: 0.35s;
             --border-radius-main: 10px;
+        }
+
+        /* --- Koyu Mod Değişkenleri --- */
+        body.dark-mode {
+            --bg-main: #1a2a1a; /* Koyu yeşil ana arka plan */
+            --bg-card: #253f25; /* Kartlar için daha koyu yeşil */
+            --bg-aside: #203520; /* Yan menü için biraz farklı koyu yeşil */
+            --bg-code: #2f4f2f;
+            --text-main: #e0f0e0; /* Açık yeşilimsi beyaz metin */
+            --text-secondary: #a8c8a8; /* Daha soluk yeşilimsi metin */
+            --text-blockquote: #b8d8b8;
+            --accent-primary: #3cb371; /* Orta Deniz Yeşili (açık modun secondary'si gibi) */
+            --accent-secondary: #98fb98; /* Soluk Yeşil (daha parlak vurgu) */
+            --accent-wood: #cdaa7d; /* Daha açık ahşap rengi */
+            --accent-highlight: #4a6f4a; /* Koyu modda highlight */
+            --border-color: #4a6f4a; /* Koyu mod kenarlık */
+            --shadow-color: rgba(0, 0, 0, 0.2); /* Daha belirgin gölge */
+            --shadow-hover-color: rgba(0, 0, 0, 0.3);
         }
 
         /* --- Genel Resetleme ve Temel Ayarlar --- */
@@ -41,164 +61,223 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; /* Tema geçişi için */
+        }
+        /* Koyu modda body arka plan gradient'i */
+        body.dark-mode {
+            background-image: linear-gradient(to bottom, var(--bg-main) 95%, hsla(120, 40%, 10%, 0.5));
         }
         img { max-width: 100%; height: auto; display: block; }
 
-        /* --- Ana Layout (CSS Grid) --- */
-        .container {
-            max-width: 1250px; margin: 50px auto; padding: 0 35px;
-            display: grid; grid-template-columns: 1fr 2.8fr; gap: 55px;
-            transition: padding var(--transition-speed) ease, gap var(--transition-speed) ease;
+        /* --- Erişilebilirlik: Odaklanma Stilleri --- */
+        a:focus-visible, button:focus-visible, input:focus-visible {
+            outline: 3px solid var(--accent-secondary);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 5px rgba(var(--accent-secondary-rgb, 46, 139, 87), 0.3); /* RGB formatı için JS gerekebilir veya sabit renk */
+            border-radius: 3px; /* Odaklanma çerçevesine hafif yuvarlaklık */
         }
+         /* Koyu modda odaklanma */
+        body.dark-mode a:focus-visible,
+        body.dark-mode button:focus-visible,
+        body.dark-mode input:focus-visible {
+             outline-color: var(--accent-secondary);
+             box-shadow: 0 0 0 5px rgba(var(--accent-secondary-rgb-dark, 152, 251, 152), 0.4);
+        }
+
+
+        /* --- Ana Layout (CSS Grid) --- */
+        .container { max-width: 1250px; margin: 50px auto; padding: 0 35px; display: grid; grid-template-columns: 1fr 2.8fr; gap: 55px; transition: padding var(--transition-speed) ease, gap var(--transition-speed) ease; }
         main, aside { min-width: 0; }
         main { grid-column: 2 / 3; }
         aside { grid-column: 1 / 2; position: sticky; top: 50px; align-self: start; }
 
-        /* --- Başlık (Header) - Karadeniz Dalgaları/Tepeleri --- */
+        /* --- Başlık (Header) --- */
         header {
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white; text-align: center; padding: 60px 25px 70px 25px;
-            margin-bottom: 70px;
+            color: white; text-align: center; padding: 60px 25px 70px 25px; margin-bottom: 70px;
             clip-path: polygon(0 0, 100% 0, 100% 85%, 80% 95%, 50% 88%, 20% 95%, 0 85%);
-            position: relative; overflow: hidden;
+            position: relative; overflow: hidden; transition: background var(--transition-speed) ease;
         }
-        header::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px; opacity: 0.3;
-        }
-        header h1 {
-            font-family: var(--font-heading); font-size: 3.2em; font-weight: 700;
-            letter-spacing: 1.5px; margin-bottom: 15px;
-            text-shadow: 2px 2px 5px rgba(0, 50, 0, 0.3);
-            position: relative; z-index: 1;
-        }
-         header h1::after {
-             content: ''; display: block; width: 80px; height: 3px;
-             background: rgba(255, 255, 255, 0.5); margin: 15px auto 0 auto;
-             border-radius: 2px;
-         }
-        header .site-slogani {
-             font-family: var(--font-body); font-style: italic; font-size: 1.15em;
-             opacity: 0.9; position: relative; z-index: 1;
-        }
+        header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3; }
+        body.dark-mode header::before { opacity: 0.15; } /* Koyu modda desen daha soluk */
+        header h1 { font-family: var(--font-heading); font-size: 3.2em; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 15px; text-shadow: 2px 2px 5px rgba(0, 50, 0, 0.3); position: relative; z-index: 1; }
+         header h1::after { content: ''; display: block; width: 80px; height: 3px; background: rgba(255, 255, 255, 0.5); margin: 15px auto 0 auto; border-radius: 2px; }
+        header .site-slogani { font-family: var(--font-body); font-style: italic; font-size: 1.15em; opacity: 0.9; position: relative; z-index: 1; }
 
         /* --- Yazar Profili (Aside) --- */
         #profil {
-            background-color: var(--bg-aside); padding: 40px;
-            border-radius: var(--border-radius-main); box-shadow: 0 6px 25px var(--shadow-color);
-            text-align: center; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            background-color: var(--bg-aside); padding: 40px; border-radius: var(--border-radius-main);
+            box-shadow: 0 6px 25px var(--shadow-color); text-align: center;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
             border: 1px solid var(--border-color);
-            background-image: linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px);
-            background-size: 100% 5px;
+            background-image: linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px); background-size: 100% 5px;
         }
+        body.dark-mode #profil { background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px); }
         #profil:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 10px 30px var(--shadow-hover-color); }
-        #profil img#profil-foto {
-            width: 160px; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 50%;
-            border: 8px solid var(--bg-card);
-            box-shadow: 0 0 0 4px var(--accent-wood), 0 5px 15px var(--shadow-color);
-            margin: 0 auto 30px auto;
-            transition: transform var(--transition-speed) ease, box-shadow 0.4s ease;
-        }
+        #profil img#profil-foto { width: 160px; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 50%; border: 8px solid var(--bg-card); box-shadow: 0 0 0 4px var(--accent-wood), 0 5px 15px var(--shadow-color); margin: 0 auto 30px auto; transition: transform var(--transition-speed) ease, box-shadow 0.4s ease, border-color var(--transition-speed) ease; }
+        body.dark-mode #profil img#profil-foto { border-color: var(--bg-card); box-shadow: 0 0 0 4px var(--accent-wood), 0 5px 15px var(--shadow-color); }
         #profil img#profil-foto:hover { transform: scale(1.08) rotate(2deg); box-shadow: 0 0 0 4px var(--accent-wood), 0 8px 25px var(--shadow-hover-color); }
-        #profil h3 {
-            font-family: var(--font-heading); color: var(--accent-primary); margin-bottom: 15px;
-            font-size: 1.5em; font-weight: 700;
-        }
-        #profil p { font-size: 1.05em; color: var(--text-secondary); line-height: 1.7; }
+        #profil h3 { font-family: var(--font-heading); color: var(--accent-primary); margin-bottom: 15px; font-size: 1.5em; font-weight: 700; transition: color var(--transition-speed) ease; }
+        #profil p { font-size: 1.05em; color: var(--text-secondary); line-height: 1.7; transition: color var(--transition-speed) ease; }
 
         /* --- Blog Yazıları (Anekdotlar) --- */
         .blog-yazisi {
             background-color: var(--bg-card); margin-bottom: 60px; padding: 50px;
             border-radius: var(--border-radius-main); box-shadow: 0 6px 25px var(--shadow-color);
             border: 1px solid var(--border-color); opacity: 0; transform: translateY(40px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out, box-shadow var(--transition-speed) ease, padding var(--transition-speed) ease;
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out, box-shadow var(--transition-speed) ease, padding var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
             position: relative; overflow: hidden;
         }
-        .blog-yazisi::before { /* Sol kenar vurgu çizgisi */
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px;
-            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
-            transition: transform 0.5s ease; transform: scaleY(0); transform-origin: bottom;
-        }
+        .blog-yazisi::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary)); transition: transform 0.5s ease, background var(--transition-speed) ease; transform: scaleY(0); transform-origin: bottom; }
         .blog-yazisi:hover::before { transform: scaleY(1); transform-origin: top; }
         .blog-yazisi:hover { box-shadow: 0 10px 35px var(--shadow-hover-color); }
         .blog-yazisi.gorunur { opacity: 1; transform: translateY(0); }
-         .blog-yazisi.gorunur::before { transform: scaleY(1); transform-origin: bottom; transition-delay: 0.5s; }
+        .blog-yazisi.gorunur::before { transform: scaleY(1); transform-origin: bottom; transition-delay: 0.5s; }
 
-        .blog-yazisi h2 { /* Yazı Başlığı */
-            font-family: var(--font-heading); color: var(--text-main); margin-bottom: 15px;
-            font-size: 2em; font-weight: 700; position: relative; padding-bottom: 18px;
-            word-break: break-word;
+        .yazi-meta { /* Tarih, okuma süresi ve etiketleri içeren bölüm */
+            display: flex;
+            flex-wrap: wrap; /* Küçük ekranlarda alt satıra geçsin */
+            align-items: center;
+            gap: 10px 20px; /* Dikey ve yatay boşluk */
+            margin-bottom: 35px;
+            font-family: var(--font-heading);
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            transition: color var(--transition-speed) ease;
         }
-        .blog-yazisi h2::after { /* Başlık altı çizgisi */
-            content: ''; position: absolute; left: 0; bottom: 0; width: 60px; height: 4px;
-            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
-            border-radius: 2px;
+        .yazi-meta > span { /* Tarih ve Okuma Süresi */
+             display: inline-flex; /* İkonla yan yana gelmesi için */
+             align-items: center;
+             gap: 6px; /* İkon ve metin arası boşluk */
         }
-        .blog-yazisi .tarih { /* Yazı Tarihi */
-            font-family: var(--font-heading); color: var(--text-secondary); font-size: 0.95em;
-            margin-bottom: 35px; font-weight: 500; display: inline-block;
-            background-color: var(--bg-main); padding: 3px 10px; border-radius: 4px;
+         /* Tarih ve Okuma Süresi ikonları için basit stiller (SVG veya unicode kullanılabilir) */
+        .yazi-meta .ikon {
+             display: inline-block;
+             width: 1em;
+             height: 1em;
+             position: relative;
+             top: 0.1em; /* Dikey hizalama */
+             opacity: 0.7;
         }
-        .blog-yazisi .icerik { word-wrap: break-word; } /* Yazı İçeriği */
+
+        .etiketler { /* Etiket Konteyneri */
+             display: flex;
+             flex-wrap: wrap;
+             gap: 8px;
+             margin-left: auto; /* Meta bölümünde sağa yasla (flex ile) */
+        }
+        .etiket { /* Tekil Etiket */
+            display: inline-block;
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            padding: 4px 12px;
+            border-radius: 15px; /* Hap şeklinde */
+            font-size: 0.85em;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+        }
+        .etiket:hover {
+            background-color: var(--accent-secondary);
+            color: white;
+            border-color: var(--accent-secondary);
+            transform: translateY(-1px);
+        }
+        body.dark-mode .etiket { background-color: var(--bg-aside); border-color: var(--border-color); color: var(--text-secondary); }
+        body.dark-mode .etiket:hover { background-color: var(--accent-secondary); color: var(--bg-main); border-color: var(--accent-secondary); }
+
+
+        .blog-yazisi h2 { font-family: var(--font-heading); color: var(--text-main); margin-bottom: 0; /* Meta ile arasındaki boşluk kaldırıldı */ font-size: 2em; font-weight: 700; position: relative; padding-bottom: 18px; word-break: break-word; transition: color var(--transition-speed) ease; }
+        .blog-yazisi h2::after { content: ''; position: absolute; left: 0; bottom: 0; width: 60px; height: 4px; background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); border-radius: 2px; transition: background var(--transition-speed) ease;}
+        /* Tarih kaldırıldı, yazi-meta içine taşındı */
+        .blog-yazisi .icerik { word-wrap: break-word; margin-top: 30px; /* Başlık/Meta sonrası boşluk */}
         .blog-yazisi .icerik p { margin-bottom: 1.7em; }
-         .blog-yazisi .icerik p::first-letter {
-            font-size: 2.8em; color: var(--accent-primary); font-weight: bold; margin-right: 0.08em;
-            float: left; line-height: 0.85; padding-right: 10px; padding-top: 7px;
-            font-family: var(--font-body);
-         }
-        .blog-yazisi .kaynak { /* Yazı Kaynağı */
-            font-family: var(--font-heading); font-style: normal; font-size: 0.95em;
-            color: var(--text-secondary); text-align: right; margin-top: 35px;
-            border-top: 1px dashed var(--border-color); padding-top: 20px;
-            font-weight: 500; word-break: break-word;
-        }
-        .blog-yazisi .kaynak strong { color: var(--accent-wood); font-weight: 700; }
-         .blog-yazisi blockquote { /* Alıntılar */
-             margin: 30px 0; padding: 25px 30px 25px 60px; background-color: var(--bg-main);
-             border-left: none; position: relative; font-style: italic; color: var(--text-secondary);
-             border-radius: var(--border-radius-main); box-shadow: inset 4px 4px 8px rgba(0,0,0,0.04);
-             border: 1px solid var(--border-color); word-wrap: break-word;
-         }
-          .blog-yazisi blockquote::before { /* Alıntı işareti */
-              content: '“'; font-family: 'Merriweather', serif; position: absolute; left: 18px; top: 15px;
-              font-size: 4em; color: var(--accent-secondary); line-height: 1; opacity: 0.9;
-          }
+         .blog-yazisi .icerik p::first-letter { font-size: 2.8em; color: var(--accent-primary); font-weight: bold; margin-right: 0.08em; float: left; line-height: 0.85; padding-right: 10px; padding-top: 7px; font-family: var(--font-body); transition: color var(--transition-speed) ease;}
+        .blog-yazisi .kaynak { font-family: var(--font-heading); font-style: normal; font-size: 0.95em; color: var(--text-secondary); text-align: right; margin-top: 35px; border-top: 1px dashed var(--border-color); padding-top: 20px; font-weight: 500; word-break: break-word; transition: color var(--transition-speed) ease, border-color var(--transition-speed) ease;}
+        .blog-yazisi .kaynak strong { color: var(--accent-wood); font-weight: 700; transition: color var(--transition-speed) ease;}
+         .blog-yazisi blockquote { margin: 30px 0; padding: 25px 30px 25px 60px; background-color: var(--bg-main); border-left: none; position: relative; font-style: italic; color: var(--text-blockquote); border-radius: var(--border-radius-main); box-shadow: inset 4px 4px 8px rgba(0,0,0,0.04); border: 1px solid var(--border-color); word-wrap: break-word; transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease;}
+          .blog-yazisi blockquote::before { content: '“'; font-family: 'Merriweather', serif; position: absolute; left: 18px; top: 15px; font-size: 4em; color: var(--accent-secondary); line-height: 1; opacity: 0.9; transition: color var(--transition-speed) ease;}
           .blog-yazisi blockquote p { margin-bottom: 0.8em; }
           .blog-yazisi blockquote p:last-child { margin-bottom: 0; }
           .blog-yazisi blockquote p::first-letter { all: unset; }
 
-        /* Link Stilleri */
-        a {
-            color: var(--accent-primary); text-decoration: none; font-weight: bold;
-            transition: color var(--transition-speed) ease, background-position var(--transition-speed) ease;
-            position: relative; word-break: break-word;
-            background-image: linear-gradient(to right, var(--accent-secondary), var(--accent-secondary));
-            background-size: 0% 2px; background-repeat: no-repeat;
-            background-position: left bottom; padding-bottom: 2px;
+        /* Paylaşım Butonları */
+        .yazi-paylas {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px dashed var(--border-color);
+            text-align: right;
+            transition: border-color var(--transition-speed) ease;
         }
+        .paylas-butonlari button {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 15px;
+            margin-left: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            font-size: 0.85em;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+            display: inline-flex; /* İkonla hizalama */
+            align-items: center;
+            gap: 6px;
+        }
+        .paylas-butonlari button svg { /* İkon stilleri */
+             width: 1em;
+             height: 1em;
+             fill: currentColor; /* Buton rengini alsın */
+        }
+        .paylas-butonlari button:hover {
+            background-color: var(--accent-secondary);
+            color: white;
+            border-color: var(--accent-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px var(--shadow-color);
+        }
+        body.dark-mode .paylas-butonlari button { border-color: var(--border-color); color: var(--text-secondary); }
+        body.dark-mode .paylas-butonlari button:hover { background-color: var(--accent-secondary); color: var(--bg-main); border-color: var(--accent-secondary); }
+
+
+        /* Link Stilleri */
+        a { color: var(--accent-primary); text-decoration: none; font-weight: bold; transition: color var(--transition-speed) ease, background-position var(--transition-speed) ease; position: relative; word-break: break-word; background-image: linear-gradient(to right, var(--accent-secondary), var(--accent-secondary)); background-size: 0% 2px; background-repeat: no-repeat; background-position: left bottom; padding-bottom: 2px; }
         a:hover { color: var(--accent-secondary); background-size: 100% 2px; }
 
         /* --- Footer --- */
         footer {
-            text-align: center; margin-top: 80px; padding: 40px; font-size: 0.95em;
+            text-align: center; margin-top: 80px; padding: 40px 30px; /* Padding artırıldı */ font-size: 0.95em;
             color: var(--text-secondary); border-top: 5px solid var(--accent-wood);
             font-family: var(--font-heading); background-color: var(--bg-card);
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+            position: relative; /* Tema butonu için */
         }
+        /* Tema Değiştirme Butonu */
+        #tema-degistir {
+            position: absolute;
+            top: 25px; right: 25px;
+            background: none; border: none; cursor: pointer;
+            padding: 5px; font-size: 1.5em; /* İkon boyutu */
+            color: var(--text-secondary);
+            transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+        #tema-degistir:hover {
+             color: var(--text-main);
+             transform: scale(1.1) rotate(10deg);
+        }
+        #tema-degistir svg { display: block; width: 1em; height: 1em; fill: currentColor; }
+        /* Başlangıçta sadece bir ikon görünür (JS ile ayarlanacak) */
+        .ikon-ay { display: none; }
+        body.dark-mode .ikon-gunes { display: none; }
+        body.dark-mode .ikon-ay { display: block; }
 
         /* --- Başa Dön Butonu --- */
-        #basa-don {
-            position: fixed; bottom: 35px; right: 35px; width: 55px; height: 55px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white; border: none; border-radius: 50%; font-size: 1.6em;
-            text-align: center; line-height: 55px; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 50, 0, 0.25); opacity: 0; visibility: hidden;
-            transform: translateY(20px) scale(0.9); transition: all var(--transition-speed) ease;
-            z-index: 1000;
-        }
+        #basa-don { position: fixed; bottom: 35px; right: 35px; width: 55px; height: 55px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; border: none; border-radius: 50%; font-size: 1.6em; text-align: center; line-height: 55px; cursor: pointer; box-shadow: 0 5px 15px rgba(0, 50, 0, 0.25); opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.9); transition: all var(--transition-speed) ease; z-index: 1000; }
         #basa-don.gorunur { opacity: 0.9; visibility: visible; transform: translateY(0) scale(1); }
         #basa-don:hover { opacity: 1; box-shadow: 0 8px 20px rgba(0, 50, 0, 0.3); transform: scale(1.05); }
+        body.dark-mode #basa-don { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        body.dark-mode #basa-don:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
 
         /* ========================================== */
         /* === DUYARLILIK (RESPONSIVE) AYARLARI === */
@@ -208,8 +287,9 @@
             .container { grid-template-columns: 1fr; gap: 45px; padding: 0 25px; margin-top: 40px; }
             aside { grid-row: 1 / 2; position: static; width: 85%; max-width: 550px; margin: 0 auto 50px auto; padding: 35px; }
             main { grid-row: 2 / 3; }
-             header { margin-bottom: 50px; padding: 50px 20px 60px 20px; clip-path: polygon(0 0, 100% 0, 100% 90%, 80% 98%, 50% 92%, 20% 98%, 0 90%); }
-             header h1 { font-size: 2.8em; }
+            header { margin-bottom: 50px; padding: 50px 20px 60px 20px; clip-path: polygon(0 0, 100% 0, 100% 90%, 80% 98%, 50% 92%, 20% 98%, 0 90%); }
+            header h1 { font-size: 2.8em; }
+            .yazi-meta { margin-bottom: 30px; }
         }
         @media (max-width: 768px) { /* Küçük Tabletler / Büyük Telefonlar */
              body { font-size: 15px; } .container { padding: 0 20px; }
@@ -219,13 +299,16 @@
              #profil img#profil-foto { width: 140px; }
              header h1 { font-size: 2.4em; } header .site-slogani { font-size: 1.05em; }
              #basa-don { width: 50px; height: 50px; line-height: 50px; font-size: 1.4em; bottom: 25px; right: 25px;}
+             .yazi-meta { flex-direction: column; align-items: flex-start; gap: 15px;} /* Etiketleri sola al */
+             .etiketler { margin-left: 0; }
+             .yazi-paylas { text-align: center; } /* Paylaşım butonlarını ortala */
+             .paylas-butonlari button { margin: 5px; }
         }
         @media (max-width: 480px) { /* Küçük Telefonlar */
              .container { padding: 0 15px; margin-top: 30px; gap: 35px; }
              .blog-yazisi { padding: 25px 20px; }
              .blog-yazisi h2 { font-size: 1.5em; padding-bottom: 12px;}
              .blog-yazisi h2::after { width: 50px; height: 3px; }
-             .blog-yazisi .tarih { margin-bottom: 25px; }
              .blog-yazisi .icerik p::first-letter { font-size: 2.4em; padding-top: 5px;}
              .blog-yazisi blockquote { padding: 20px 20px 20px 45px; }
              .blog-yazisi blockquote::before { font-size: 3.2em; left: 12px; top: 8px;}
@@ -234,17 +317,71 @@
              header h1 { font-size: 2em; }
              #profil img#profil-foto { width: 120px; }
              #basa-don { width: 45px; height: 45px; line-height: 45px; font-size: 1.3em; bottom: 20px; right: 20px;}
+             #tema-degistir { top: 15px; right: 15px; font-size: 1.3em;} /* Tema butonu yeri */
+             footer { padding: 30px 15px; }
         }
+
         /* --- Kaydırma Çubuğu --- */
         ::-webkit-scrollbar { width: 13px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 1px solid var(--border-color); }
-        ::-webkit-scrollbar-thumb { background: var(--accent-secondary); border-radius: 6px; border: 3px solid var(--bg-main); }
+        body.dark-mode ::-webkit-scrollbar-track { border-left-color: var(--border-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-secondary); border-radius: 6px; border: 3px solid var(--bg-main); transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+        body.dark-mode ::-webkit-scrollbar-thumb { background: var(--accent-secondary); border-color: var(--bg-main); }
+        body.dark-mode ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+        /* --- Yazdırma Stilleri --- */
+        @media print {
+            body {
+                font-size: 12pt; /* Yazdırma için uygun boyut */
+                line-height: 1.5;
+                color: #000; /* Siyah beyaz yazıcılar için */
+                background: none; /* Arka planı kaldır */
+            }
+            header, aside, footer, #basa-don, .yazi-paylas, #tema-degistir, .blog-yazisi::before, .blog-yazisi h2::after, .etiketler /* İsteğe bağlı */ {
+                display: none; /* Yazdırılmayacak öğeler */
+            }
+            .container {
+                display: block; /* Grid yapısını kaldır */
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            main { width: 100%; }
+            .blog-yazisi {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                margin-bottom: 30px;
+                page-break-inside: avoid; /* Yazıları bölmemeye çalış */
+            }
+            .yazi-meta { margin-bottom: 15px; font-size: 10pt; color: #444; }
+            .okuma-suresi, .tarih { display: inline; margin-right: 15px; } /* Tarih ve okuma süresini göster */
+            .blog-yazisi h2 {
+                font-size: 18pt;
+                color: #000;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #ccc; /* Başlık altına çizgi */
+            }
+            blockquote {
+                border-left: 3px solid #ccc;
+                padding: 10px 15px;
+                margin: 15px 0;
+                background: #f4f4f4;
+                color: #333;
+                font-style: italic;
+            }
+            blockquote::before { display: none; } /* Tırnak işaretini yazdırmada gizle */
+            a { color: #333; text-decoration: underline; } /* Linkleri altı çizili göster */
+            a::after { display: none; } /* Hover efektini gizle */
+            .kaynak { text-align: left; font-size: 10pt; color: #555; margin-top: 15px; border-top: 1px solid #eee; padding-top: 8px;}
+            .kaynak strong { color: #000; }
+        }
+
     </style>
 </head>
-<body>
-
-    <header>
+<body> <header>
         <h1>Okuduklarımdan Kalanlar</h1>
         <p class="site-slogani">Satırlardan hayata süzülenler...</p>
     </header>
@@ -258,9 +395,22 @@
 
         <main id="yazilar">
 
-            <article class="blog-yazisi">
+            <article class="blog-yazisi" id="yazi-1">
                 <h2>Doğanın Öğrettiği Direnç</h2>
-                <p class="tarih">9 Nisan 2025</p>
+                <div class="yazi-meta">
+                     <span class="tarih">
+                          <span class="ikon" aria-hidden="true">📅</span>
+                          9 Nisan 2025
+                     </span>
+                     <span class="okuma-suresi">
+                           <span class="ikon" aria-hidden="true">⏱️</span>
+                           </span>
+                    <div class="etiketler">
+                        <span class="etiket">Doğa</span>
+                        <span class="etiket">Anı</span>
+                        <span class="etiket">Felsefe</span>
+                    </div>
+                </div>
                 <div class="icerik">
                     <p>Zorlu coğrafyalarda geçen hayatları anlatan bir gezi günlüğü okuyordum geçenlerde. Yazarın, sarp yamaçlara tutunan ağaçlardan ve hırçın dalgalara göğüs geren kıyılardan bahsederken kullandığı ifadeler dikkatimi çekti. Doğanın bu boyun eğmez tavrının, orada yaşayan insanların karakterine nasıl işlediğini anlatıyordu.</p>
                     <blockquote>
@@ -269,10 +419,35 @@
                     <p>Bu satırlar bana ister istemez içinde yaşadığımız bu güzel Karadeniz coğrafyasını hatırlattı. Dik yamaçlar, sürekli yağan yağmur, gelgitli deniz... Bütün bu doğal koşullar, buranın insanına da benzersiz bir direnç, pratik bir zeka ve mücadeleci bir ruh katmış sanki. Okuduğum bu kitap, doğa ile insan arasındaki o kopmaz bağ ve adaptasyon gücü üzerine tekrar düşünmemi sağladı. Zorlukların içinde bile bir güzellik ve yaşama gücü bulabilmek, sanırım doğanın bize fısıldadığı en önemli derslerden biri.</p>
                 </div>
                 <p class="kaynak">Kaynak: <strong>Bir Gezginin Not Defteri (Örnek)</strong>, A. Gezgin</p>
+                <div class="yazi-paylas">
+                     <div class="paylas-butonlari">
+                           <button class="paylas-link" aria-label="Yazı linkini kopyala">
+                                <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                                Linki Kopyala
+                           </button>
+                           <button class="paylas-twitter" aria-label="Twitter'da paylaş">
+                                <svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.01-.06C3.44 19.89 5.64 20.5 7.99 20.5 16 20.5 20.56 14 20.56 8.52c0-.21 0-.42-.02-.63.84-.6 1.57-1.36 2.14-2.23z"/></svg>
+                                Paylaş
+                           </button>
+                     </div>
+                </div>
             </article>
-            <article class="blog-yazisi">
-                <h2>Tarihin Fısıldadığı Küçük Şeyler</h2>
-                <p class="tarih">2 Nisan 2025</p>
+            <article class="blog-yazisi" id="yazi-2">
+                 <h2>Tarihin Fısıldadığı Küçük Şeyler</h2>
+                 <div class="yazi-meta">
+                      <span class="tarih">
+                           <span class="ikon" aria-hidden="true">📅</span>
+                           2 Nisan 2025
+                      </span>
+                      <span class="okuma-suresi">
+                            <span class="ikon" aria-hidden="true">⏱️</span>
+                            </span>
+                     <div class="etiketler">
+                         <span class="etiket">Tarih</span>
+                         <span class="etiket">Detay</span>
+                         <span class="etiket">Yorum</span>
+                     </div>
+                 </div>
                 <div class="icerik">
                     <p>Tarih kitapları genellikle büyük olaylara, savaşlara, krallara odaklanır. Ancak bazen okuduğum detaylı bir tarih araştırmasında karşıma çıkan küçücük bir ayrıntı, koca bir dönemi anlamak için generallerin stratejilerinden daha fazla şey anlatır bana. Geçenlerde okuduğum bir kitapta tam da böyle bir an yaşadım.</p>
                     <blockquote>
@@ -281,36 +456,135 @@
                     <p>Sadece bir fincan kahve... Ama o küçücük detay, bize büyük anlatıların çoğu zaman gözden kaçırdığı gündelik hayatın ritmini, insanların değer yargılarını ve dönemin atmosferini fısıldıyor adeta. Tarihi sadece büyük olaylar üzerinden değil, bu tür insani 'küçük şeyler' üzerinden okumayı denediğimizde, geçmişle daha derin bir bağ kurabildiğimizi düşünüyorum. Bu yüzden okurken satır aralarında kalmış bu tür <a href="#">anekdotları</a> yakalamayı seviyorum.</p>
                 </div>
                 <p class="kaynak">Kaynak: <strong>Unutulmuş Yüzyılın İzleri (Örnek)</strong>, Dr. Tarihçi</p>
+                 <div class="yazi-paylas">
+                      <div class="paylas-butonlari">
+                           <button class="paylas-link" aria-label="Yazı linkini kopyala">
+                                <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                                Linki Kopyala
+                           </button>
+                           <button class="paylas-twitter" aria-label="Twitter'da paylaş">
+                                <svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.01-.06C3.44 19.89 5.64 20.5 7.99 20.5 16 20.5 20.56 14 20.56 8.52c0-.21 0-.42-.02-.63.84-.6 1.57-1.36 2.14-2.23z"/></svg>
+                                Paylaş
+                           </button>
+                      </div>
+                 </div>
             </article>
             </main>
     </div>
 
     <footer>
         <p>&copy; 2025 Okuduklarımdan Kalanlar | Tüm hakları saklıdır.</p>
+        <button id="tema-degistir" aria-label="Temayı Değiştir">
+             <svg class="ikon-gunes" viewBox="0 0 24 24" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.64 5.64c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l1.06 1.06c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41L5.64 5.64zm12.73 12.73c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l1.06 1.06c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41l-1.06-1.06zm1.06-10.61c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l1.06-1.06zm-12.73 12.73c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l1.06-1.06z"/></svg>
+             <svg class="ikon-ay" viewBox="0 0 24 24" fill="currentColor"><path d="M9.37 5.51A7.35 7.35 0 0 0 9.1 7.5c0 4.08 3.32 7.4 7.4 7.4.68 0 1.35-.09 1.99-.27A7.014 7.014 0 0 1 12 19c-3.86 0-7-3.14-7-7 0-2.93 1.81-5.45 4.37-6.49z"/></svg>
+        </button>
     </footer>
 
     <a href="#" id="basa-don" aria-label="Başa dön">↑</a>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const blogYazilari = document.querySelectorAll('.blog-yazisi');
-            if (blogYazilari.length > 0) {
-                const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) { entry.target.classList.add('gorunur'); }
-                    });
-                }, observerOptions);
-                blogYazilari.forEach(yazi => { observer.observe(yazi); });
-            }
 
-            const basaDonButonu = document.getElementById('basa-don');
-            if(basaDonButonu) {
-                window.addEventListener('scroll', () => {
-                    basaDonButonu.classList.toggle('gorunur', window.pageYOffset > 350);
+            // --- Tahmini Okuma Süresi Hesaplama ---
+            const wpm = 220; // Ortalama okuma hızı (kelime/dakika)
+            const blogYazilari = document.querySelectorAll('.blog-yazisi');
+
+            blogYazilari.forEach(yazi => {
+                const icerikDiv = yazi.querySelector('.icerik');
+                const okumaSuresiSpan = yazi.querySelector('.okuma-suresi');
+                if (icerikDiv && okumaSuresiSpan) {
+                    const text = icerikDiv.textContent || icerikDiv.innerText || "";
+                    const kelimeSayisi = text.trim().split(/\s+/).length; // Boşluklara göre kelime say
+                    const dakika = Math.ceil(kelimeSayisi / wpm);
+                    okumaSuresiSpan.insertAdjacentHTML('beforeend', ` ${dakika} dk okuma`); // Sonuna ekle
+                }
+            });
+
+            // --- Sosyal Paylaşım Butonları ---
+            const paylasButonlari = document.querySelectorAll('.paylas-butonlari');
+            paylasButonlari.forEach(container => {
+                const yaziElementi = container.closest('article');
+                const yaziId = yaziElementi ? yaziElementi.id : null;
+                const yaziBasligi = yaziElementi ? (yaziElementi.querySelector('h2')?.textContent || 'Okuduklarımdan Kalanlar') : 'Okuduklarımdan Kalanlar';
+
+                const linkKopyalaButon = container.querySelector('.paylas-link');
+                const twitterButon = container.querySelector('.paylas-twitter');
+
+                // 1. Link Kopyalama
+                if (linkKopyalaButon && yaziId) {
+                    linkKopyalaButon.addEventListener('click', () => {
+                        const urlToCopy = `${window.location.href.split('#')[0]}#${yaziId}`; // Mevcut URL + #yazi-id
+                        navigator.clipboard.writeText(urlToCopy).then(() => {
+                            const originalText = linkKopyalaButon.innerHTML;
+                            linkKopyalaButon.textContent = ' Kopyalandı!';
+                            setTimeout(() => {
+                                linkKopyalaButon.innerHTML = originalText;
+                            }, 2000); // 2 saniye sonra eski haline dön
+                        }).catch(err => {
+                            console.error('Link kopyalanamadı: ', err);
+                            alert('Link kopyalanamadı!');
+                        });
+                    });
+                }
+
+                // 2. Twitter Paylaşımı
+                if (twitterButon && yaziId) {
+                    twitterButon.addEventListener('click', () => {
+                        const urlToShare = `${window.location.href.split('#')[0]}#${yaziId}`;
+                        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(yaziBasligi)}&url=${encodeURIComponent(urlToShare)}`;
+                        window.open(twitterUrl, '_blank', 'noopener,noreferrer');
+                    });
+                }
+            });
+
+
+            // --- Koyu Mod (Dark Mode) Kontrolü ---
+            const temaButonu = document.getElementById('tema-degistir');
+            const body = document.body;
+            const tercihEdilenTema = localStorage.getItem('tema'); // Kayıtlı tercihi al
+
+             // Başlangıç temasını ayarla
+             if (tercihEdilenTema === 'dark') {
+                 body.classList.add('dark-mode');
+             } else {
+                 body.classList.remove('dark-mode'); // Varsayılan açık mod
+             }
+
+            if (temaButonu) {
+                temaButonu.addEventListener('click', () => {
+                    body.classList.toggle('dark-mode');
+                    // Tercihi kaydet
+                    if (body.classList.contains('dark-mode')) {
+                        localStorage.setItem('tema', 'dark');
+                    } else {
+                        localStorage.setItem('tema', 'light');
+                        // localStorage.removeItem('tema'); // veya açık modu kaydet
+                    }
                 });
             }
-            console.log("Okuduklarımdan Kalanlar scriptleri yüklendi! İçerikler eklendi.");
+
+            // --- Başa Dön Butonu Kontrolü ---
+            const basaDonButonu = document.getElementById('basa-don');
+            if(basaDonButonu) {
+                window.addEventListener('scroll', function() {
+                    basaDonButonu.classList.toggle('gorunur', window.pageYOffset > 350);
+                });
+                // Tıklama olayı zaten a href="#" ile çalışıyor, ek JS gerekmez.
+            }
+
+            // --- Görünürlük Animasyonu (Intersection Observer) ---
+             const blogYazilariAnim = document.querySelectorAll('.blog-yazisi'); // Zaten yukarıda seçilmişti, tekrar kullanılabilir
+             if (blogYazilariAnim.length > 0) {
+                 const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+                 const observer = new IntersectionObserver((entries) => {
+                     entries.forEach(entry => {
+                         if (entry.isIntersecting) { entry.target.classList.add('gorunur'); }
+                     });
+                 }, observerOptions);
+                 blogYazilariAnim.forEach(yazi => { observer.observe(yazi); });
+             }
+
+            console.log("Okuduklarımdan Kalanlar scriptleri yüklendi! Yeni özellikler eklendi.");
         });
     </script>
 
