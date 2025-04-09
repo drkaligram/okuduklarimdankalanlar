@@ -1,0 +1,2 @@
+# okuduklarimdankalanlar
+Okuduklarımdan Kalanlar
