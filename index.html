@@ -10,37 +10,31 @@
 
         /* --- CSS Değişkenleri (Karadeniz Yeşil Tema) --- */
         :root {
-            --bg-main: #f4f9f4;          /* Ana arka plan (Çok hafif yeşil tonlu beyaz) */
-            --bg-card: #ffffff;          /* Kart/Alan arka planı (Beyaz) */
-            --bg-aside: #fafdfa;         /* Yan sütun için hafif farklı arka plan */
-            --text-main: #1f3a1f;        /* Ana metin rengi (Koyu orman yeşili) */
-            --text-secondary: #4a6f4a;   /* İkincil metin (Orta ton yeşil) */
-            --accent-primary: #006400;   /* Ana vurgu rengi (Koyu Yeşil) */
-            --accent-secondary: #2E8B57; /* İkincil vurgu (Deniz Yeşili) */
-            --accent-wood: #8B4513;      /* Ahşap rengi vurgu (Kahverengi) */
-            --accent-highlight: #f0e6d2; /* Çok açık krem/bej highlight */
-            --border-color: #c8e6c9;     /* Kenarlık rengi (Açık Yeşil) */
-            --shadow-color: rgba(0, 100, 0, 0.08); /* Yeşilimsi Gölge */
-            --shadow-hover-color: rgba(0, 100, 0, 0.12); /* Hover Gölgesi */
-
+            --bg-main: #f4f9f4;
+            --bg-card: #ffffff;
+            --bg-aside: #fafdfa;
+            --text-main: #1f3a1f;
+            --text-secondary: #4a6f4a;
+            --accent-primary: #006400;
+            --accent-secondary: #2E8B57;
+            --accent-wood: #8B4513;
+            --accent-highlight: #f0e6d2;
+            --border-color: #c8e6c9;
+            --shadow-color: rgba(0, 100, 0, 0.08);
+            --shadow-hover-color: rgba(0, 100, 0, 0.12);
             --font-body: 'Merriweather', serif;
             --font-heading: 'Poppins', sans-serif;
-
-            --transition-speed: 0.35s; /* Geçiş hızını hafif artır */
-            --border-radius-main: 10px; /* Daha yumuşak köşeler */
+            --transition-speed: 0.35s;
+            --border-radius-main: 10px;
         }
 
         /* --- Genel Resetleme ve Temel Ayarlar --- */
-        * {
-            box-sizing: border-box;
-            margin: 0; padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         body {
             font-family: var(--font-body);
-            line-height: 1.8; /* Okunabilirlik için biraz daha fazla satır aralığı */
+            line-height: 1.8;
             background-color: var(--bg-main);
-            /* Hafif doku hissi için arka plan gradienti */
             background-image: linear-gradient(to bottom, var(--bg-main) 95%, hsla(120, 20%, 90%, 0.3));
             color: var(--text-main);
             font-size: 16px;
@@ -52,219 +46,124 @@
 
         /* --- Ana Layout (CSS Grid) --- */
         .container {
-            max-width: 1250px; /* Biraz daha geniş */
-            margin: 50px auto;
-            padding: 0 35px;
-            display: grid;
-            grid-template-columns: 1fr 2.8fr; /* Oran hafifçe ayarlandı */
-            gap: 55px;
+            max-width: 1250px; margin: 50px auto; padding: 0 35px;
+            display: grid; grid-template-columns: 1fr 2.8fr; gap: 55px;
             transition: padding var(--transition-speed) ease, gap var(--transition-speed) ease;
         }
-        main, aside { min-width: 0; } /* Taşma önleyici */
+        main, aside { min-width: 0; }
         main { grid-column: 2 / 3; }
-        aside {
-            grid-column: 1 / 2;
-            position: sticky; top: 50px; /* Yapışkanlık mesafesi */
-            align-self: start;
-        }
+        aside { grid-column: 1 / 2; position: sticky; top: 50px; align-self: start; }
 
         /* --- Başlık (Header) - Karadeniz Dalgaları/Tepeleri --- */
         header {
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            text-align: center;
-            padding: 60px 25px 70px 25px; /* Alt padding artırıldı */
+            color: white; text-align: center; padding: 60px 25px 70px 25px;
             margin-bottom: 70px;
-            /* Daha yumuşak, dalgalı/tepeli bir alt kenar */
             clip-path: polygon(0 0, 100% 0, 100% 85%, 80% 95%, 50% 88%, 20% 95%, 0 85%);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-        /* Header'a hafif hareketli arka plan efekti (isteğe bağlı) */
         header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
                         linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.3;
-            /* animation: subtlePatternScroll 60s linear infinite; */ /* Yavaş kaydırma animasyonu (JS ile daha iyi kontrol edilir) */
+            background-size: 20px 20px; opacity: 0.3;
         }
-        /* @keyframes subtlePatternScroll { from { background-position: 0 0; } to { background-position: 0 -1000px; } } */
-
         header h1 {
-            font-family: var(--font-heading);
-            font-size: 3.2em;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            margin-bottom: 15px;
+            font-family: var(--font-heading); font-size: 3.2em; font-weight: 700;
+            letter-spacing: 1.5px; margin-bottom: 15px;
             text-shadow: 2px 2px 5px rgba(0, 50, 0, 0.3);
-            position: relative; /* Pseudo-element için */
-            z-index: 1;
+            position: relative; z-index: 1;
         }
-         /* Başlığa hafif dekoratif çizgi */
          header h1::after {
-             content: '';
-             display: block;
-             width: 80px;
-             height: 3px;
-             background: rgba(255, 255, 255, 0.5);
-             margin: 15px auto 0 auto;
+             content: ''; display: block; width: 80px; height: 3px;
+             background: rgba(255, 255, 255, 0.5); margin: 15px auto 0 auto;
              border-radius: 2px;
          }
-
         header .site-slogani {
-             font-family: var(--font-body);
-             font-style: italic;
-             font-size: 1.15em;
-             opacity: 0.9;
-             position: relative;
-             z-index: 1;
+             font-family: var(--font-body); font-style: italic; font-size: 1.15em;
+             opacity: 0.9; position: relative; z-index: 1;
         }
 
         /* --- Yazar Profili (Aside) --- */
         #profil {
-            background-color: var(--bg-aside); /* Hafif farklı arka plan */
-            padding: 40px;
-            border-radius: var(--border-radius-main);
-            box-shadow: 0 6px 25px var(--shadow-color);
-            text-align: center;
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            background-color: var(--bg-aside); padding: 40px;
+            border-radius: var(--border-radius-main); box-shadow: 0 6px 25px var(--shadow-color);
+            text-align: center; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
             border: 1px solid var(--border-color);
-            /* Ahşap damarı gibi hafif dikey çizgi efekti */
             background-image: linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px);
             background-size: 100% 5px;
         }
-        #profil:hover {
-             transform: translateY(-6px) scale(1.01); /* Hafif büyüme */
-             box-shadow: 0 10px 30px var(--shadow-hover-color);
-        }
-
+        #profil:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 10px 30px var(--shadow-hover-color); }
         #profil img#profil-foto {
-            width: 160px; /* Biraz daha büyük */
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 8px solid var(--bg-card); /* İç çerçeve */
-            /* Ahşap rengi dış çerçeve ve gölge */
+            width: 160px; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 50%;
+            border: 8px solid var(--bg-card);
             box-shadow: 0 0 0 4px var(--accent-wood), 0 5px 15px var(--shadow-color);
             margin: 0 auto 30px auto;
             transition: transform var(--transition-speed) ease, box-shadow 0.4s ease;
         }
-        #profil img#profil-foto:hover {
-             transform: scale(1.08) rotate(2deg); /* Daha belirgin hover efekti */
-             box-shadow: 0 0 0 4px var(--accent-wood), 0 8px 25px var(--shadow-hover-color);
-        }
-
+        #profil img#profil-foto:hover { transform: scale(1.08) rotate(2deg); box-shadow: 0 0 0 4px var(--accent-wood), 0 8px 25px var(--shadow-hover-color); }
         #profil h3 {
-            font-family: var(--font-heading);
-            color: var(--accent-primary);
-            margin-bottom: 15px;
-            font-size: 1.5em;
-            font-weight: 700; /* Daha kalın */
+            font-family: var(--font-heading); color: var(--accent-primary); margin-bottom: 15px;
+            font-size: 1.5em; font-weight: 700;
         }
-        #profil p {
-            font-size: 1.05em; /* Biraz daha büyük */
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
+        #profil p { font-size: 1.05em; color: var(--text-secondary); line-height: 1.7; }
 
         /* --- Blog Yazıları (Anekdotlar) --- */
         .blog-yazisi {
-            background-color: var(--bg-card);
-            margin-bottom: 60px;
-            padding: 50px;
-            border-radius: var(--border-radius-main);
-            box-shadow: 0 6px 25px var(--shadow-color);
-            border: 1px solid var(--border-color);
-            opacity: 0;
-            transform: translateY(40px);
+            background-color: var(--bg-card); margin-bottom: 60px; padding: 50px;
+            border-radius: var(--border-radius-main); box-shadow: 0 6px 25px var(--shadow-color);
+            border: 1px solid var(--border-color); opacity: 0; transform: translateY(40px);
             transition: opacity 0.7s ease-out, transform 0.7s ease-out, box-shadow var(--transition-speed) ease, padding var(--transition-speed) ease;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
         .blog-yazisi::before { /* Sol kenar vurgu çizgisi */
-            content: '';
-            position: absolute; left: 0; top: 0; bottom: 0; width: 10px;
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px;
             background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
-            transition: transform 0.5s ease; /* Daha yavaş */
-            transform: scaleY(0); transform-origin: bottom;
+            transition: transform 0.5s ease; transform: scaleY(0); transform-origin: bottom;
         }
         .blog-yazisi:hover::before { transform: scaleY(1); transform-origin: top; }
         .blog-yazisi:hover { box-shadow: 0 10px 35px var(--shadow-hover-color); }
-
         .blog-yazisi.gorunur { opacity: 1; transform: translateY(0); }
-         .blog-yazisi.gorunur::before {
-             transform: scaleY(1); transform-origin: bottom;
-             transition-delay: 0.5s; /* Gecikme artırıldı */
-         }
+         .blog-yazisi.gorunur::before { transform: scaleY(1); transform-origin: bottom; transition-delay: 0.5s; }
 
-        .blog-yazisi h2 {
-            font-family: var(--font-heading);
-            color: var(--text-main);
-            margin-bottom: 15px;
-            font-size: 2em;
-            font-weight: 700;
-            position: relative;
-            padding-bottom: 18px;
+        .blog-yazisi h2 { /* Yazı Başlığı */
+            font-family: var(--font-heading); color: var(--text-main); margin-bottom: 15px;
+            font-size: 2em; font-weight: 700; position: relative; padding-bottom: 18px;
             word-break: break-word;
         }
         .blog-yazisi h2::after { /* Başlık altı çizgisi */
-            content: ''; position: absolute; left: 0; bottom: 0;
-            width: 60px; height: 4px;
-            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); /* Gradient çizgi */
+            content: ''; position: absolute; left: 0; bottom: 0; width: 60px; height: 4px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
             border-radius: 2px;
         }
-
-        .blog-yazisi .tarih {
-            font-family: var(--font-heading);
-            color: var(--text-secondary);
-            font-size: 0.95em;
-            margin-bottom: 35px;
-            font-weight: 500;
-            display: inline-block; /* Arka plan için */
-            background-color: var(--bg-main); /* Hafif arka plan */
-            padding: 3px 10px;
-            border-radius: 4px;
+        .blog-yazisi .tarih { /* Yazı Tarihi */
+            font-family: var(--font-heading); color: var(--text-secondary); font-size: 0.95em;
+            margin-bottom: 35px; font-weight: 500; display: inline-block;
+            background-color: var(--bg-main); padding: 3px 10px; border-radius: 4px;
         }
-
-        .blog-yazisi .icerik { word-wrap: break-word; }
+        .blog-yazisi .icerik { word-wrap: break-word; } /* Yazı İçeriği */
         .blog-yazisi .icerik p { margin-bottom: 1.7em; }
          .blog-yazisi .icerik p::first-letter {
-            font-size: 2.8em; color: var(--accent-primary);
-            font-weight: bold; margin-right: 0.08em;
-            float: left; line-height: 0.85;
-            padding-right: 10px; padding-top: 7px;
+            font-size: 2.8em; color: var(--accent-primary); font-weight: bold; margin-right: 0.08em;
+            float: left; line-height: 0.85; padding-right: 10px; padding-top: 7px;
             font-family: var(--font-body);
          }
-
-        .blog-yazisi .kaynak { /* Anekdot kaynağı */
-            font-family: var(--font-heading);
-            font-style: normal; font-size: 0.95em;
-            color: var(--text-secondary); text-align: right;
-            margin-top: 35px;
-            border-top: 1px dashed var(--border-color); /* Kesik çizgi */
-            padding-top: 20px; font-weight: 500; word-break: break-word;
+        .blog-yazisi .kaynak { /* Yazı Kaynağı */
+            font-family: var(--font-heading); font-style: normal; font-size: 0.95em;
+            color: var(--text-secondary); text-align: right; margin-top: 35px;
+            border-top: 1px dashed var(--border-color); padding-top: 20px;
+            font-weight: 500; word-break: break-word;
         }
-        .blog-yazisi .kaynak strong { color: var(--accent-wood); font-weight: 700; } /* Ahşap rengi */
-
+        .blog-yazisi .kaynak strong { color: var(--accent-wood); font-weight: 700; }
          .blog-yazisi blockquote { /* Alıntılar */
-             margin: 30px 0;
-             padding: 25px 30px 25px 60px;
-             background-color: var(--bg-main); /* Ana arka planla uyumlu */
-             border-left: none; position: relative;
-             font-style: italic; color: var(--text-secondary);
-             border-radius: var(--border-radius-main);
-             box-shadow: inset 4px 4px 8px rgba(0,0,0,0.04);
-             border: 1px solid var(--border-color);
-             word-wrap: break-word;
+             margin: 30px 0; padding: 25px 30px 25px 60px; background-color: var(--bg-main);
+             border-left: none; position: relative; font-style: italic; color: var(--text-secondary);
+             border-radius: var(--border-radius-main); box-shadow: inset 4px 4px 8px rgba(0,0,0,0.04);
+             border: 1px solid var(--border-color); word-wrap: break-word;
          }
           .blog-yazisi blockquote::before { /* Alıntı işareti */
-              content: '“'; font-family: 'Merriweather', serif;
-              position: absolute; left: 18px; top: 15px;
-              font-size: 4em; color: var(--accent-secondary); /* İkincil yeşil */
-              line-height: 1; opacity: 0.9;
+              content: '“'; font-family: 'Merriweather', serif; position: absolute; left: 18px; top: 15px;
+              font-size: 4em; color: var(--accent-secondary); line-height: 1; opacity: 0.9;
           }
           .blog-yazisi blockquote p { margin-bottom: 0.8em; }
           .blog-yazisi blockquote p:last-child { margin-bottom: 0; }
@@ -275,80 +174,52 @@
             color: var(--accent-primary); text-decoration: none; font-weight: bold;
             transition: color var(--transition-speed) ease, background-position var(--transition-speed) ease;
             position: relative; word-break: break-word;
-            /* Gradient Alt Çizgi Efekti */
             background-image: linear-gradient(to right, var(--accent-secondary), var(--accent-secondary));
-            background-size: 0% 2px; /* Başlangıçta gizli */
-            background-repeat: no-repeat;
-            background-position: left bottom;
-            padding-bottom: 2px; /* Çizgi için yer */
+            background-size: 0% 2px; background-repeat: no-repeat;
+            background-position: left bottom; padding-bottom: 2px;
         }
-        a:hover {
-            color: var(--accent-secondary); /* Hover rengi ikincil yeşil */
-            background-size: 100% 2px; /* Çizgiyi göster */
-        }
+        a:hover { color: var(--accent-secondary); background-size: 100% 2px; }
 
         /* --- Footer --- */
         footer {
-            text-align: center; margin-top: 80px;
-            padding: 40px; font-size: 0.95em;
-            color: var(--text-secondary);
-            /* Üst kenarlık ahşap rengi */
-            border-top: 5px solid var(--accent-wood);
-            font-family: var(--font-heading);
-            background-color: var(--bg-card);
+            text-align: center; margin-top: 80px; padding: 40px; font-size: 0.95em;
+            color: var(--text-secondary); border-top: 5px solid var(--accent-wood);
+            font-family: var(--font-heading); background-color: var(--bg-card);
         }
 
         /* --- Başa Dön Butonu --- */
         #basa-don {
-            position: fixed; bottom: 35px; right: 35px;
-            width: 55px; height: 55px; /* Biraz daha büyük */
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); /* Gradient */
-            color: white; border: none; border-radius: 50%;
-            font-size: 1.6em; text-align: center; line-height: 55px;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(0, 50, 0, 0.25);
-            opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.9);
-            transition: all var(--transition-speed) ease;
+            position: fixed; bottom: 35px; right: 35px; width: 55px; height: 55px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white; border: none; border-radius: 50%; font-size: 1.6em;
+            text-align: center; line-height: 55px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 50, 0, 0.25); opacity: 0; visibility: hidden;
+            transform: translateY(20px) scale(0.9); transition: all var(--transition-speed) ease;
             z-index: 1000;
         }
         #basa-don.gorunur { opacity: 0.9; visibility: visible; transform: translateY(0) scale(1); }
         #basa-don:hover { opacity: 1; box-shadow: 0 8px 20px rgba(0, 50, 0, 0.3); transform: scale(1.05); }
 
-
         /* ========================================== */
         /* === DUYARLILIK (RESPONSIVE) AYARLARI === */
         /* ========================================== */
-
-        @media (max-width: 1250px) { /* Konteyner genişliğine göre ayar */
-            .container { padding: 0 30px; gap: 45px; }
-        }
-
+        @media (max-width: 1250px) { .container { padding: 0 30px; gap: 45px; } }
         @media (max-width: 1024px) { /* Tabletler - Tek Sütun */
-            .container {
-                grid-template-columns: 1fr; gap: 45px;
-                padding: 0 25px; margin-top: 40px;
-            }
-            aside {
-                grid-row: 1 / 2; position: static;
-                width: 85%; max-width: 550px;
-                margin: 0 auto 50px auto; padding: 35px;
-            }
+            .container { grid-template-columns: 1fr; gap: 45px; padding: 0 25px; margin-top: 40px; }
+            aside { grid-row: 1 / 2; position: static; width: 85%; max-width: 550px; margin: 0 auto 50px auto; padding: 35px; }
             main { grid-row: 2 / 3; }
              header { margin-bottom: 50px; padding: 50px 20px 60px 20px; clip-path: polygon(0 0, 100% 0, 100% 90%, 80% 98%, 50% 92%, 20% 98%, 0 90%); }
              header h1 { font-size: 2.8em; }
         }
-
         @media (max-width: 768px) { /* Küçük Tabletler / Büyük Telefonlar */
-             body { font-size: 15px; }
-             .container { padding: 0 20px; }
+             body { font-size: 15px; } .container { padding: 0 20px; }
              .blog-yazisi { padding: 35px; margin-bottom: 45px; }
              .blog-yazisi h2 { font-size: 1.7em; }
              aside { width: 95%; padding: 30px; }
              #profil img#profil-foto { width: 140px; }
-             header h1 { font-size: 2.4em; }
-             header .site-slogani { font-size: 1.05em; }
+             header h1 { font-size: 2.4em; } header .site-slogani { font-size: 1.05em; }
              #basa-don { width: 50px; height: 50px; line-height: 50px; font-size: 1.4em; bottom: 25px; right: 25px;}
         }
-
         @media (max-width: 480px) { /* Küçük Telefonlar */
              .container { padding: 0 15px; margin-top: 30px; gap: 35px; }
              .blog-yazisi { padding: 25px 20px; }
@@ -362,15 +233,13 @@
              header { clip-path: none; padding: 40px 15px 50px 15px; margin-bottom: 40px;}
              header h1 { font-size: 2em; }
              #profil img#profil-foto { width: 120px; }
-              #basa-don { width: 45px; height: 45px; line-height: 45px; font-size: 1.3em; bottom: 20px; right: 20px;}
+             #basa-don { width: 45px; height: 45px; line-height: 45px; font-size: 1.3em; bottom: 20px; right: 20px;}
         }
-
-        /* --- Gelişmiş Yeşil Kaydırma Çubuğu --- */
+        /* --- Kaydırma Çubuğu --- */
         ::-webkit-scrollbar { width: 13px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 1px solid var(--border-color); }
         ::-webkit-scrollbar-thumb { background: var(--accent-secondary); border-radius: 6px; border: 3px solid var(--bg-main); }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
-
     </style>
 </head>
 <body>
@@ -383,39 +252,37 @@
     <div class="container">
         <aside id="profil">
             <img id="profil-foto" src="profil.JPG" alt="Yazarın Profil Fotoğrafı">
-
             <h3>Yazar Hakkında</h3>
             <p>Buraya yazar hakkında kısa bir tanıtım yazısı eklenebilir. Okuma tutkusu, ilgi alanları ve blogun amacı hakkında bilgi verilebilir.</p>
         </aside>
 
         <main id="yazilar">
+
             <article class="blog-yazisi">
-                <h2>Bir Hatıratın Öğrettikleri</h2>
+                <h2>Doğanın Öğrettiği Direnç</h2>
                 <p class="tarih">9 Nisan 2025</p>
                 <div class="icerik">
-                    <p>Geçmişe bir pencere açan hatıratları okumak her zaman heyecan verici olmuştur benim için. Yakın zamanda okuduğum bir anı kitabında, yazarın zorlu bir dönemde gösterdiği metanet ve yaşama sevinci beni derinden etkiledi. İnsan ruhunun ne kadar dayanıklı olabileceğini bir kez daha gördüm.</p>
+                    <p>Zorlu coğrafyalarda geçen hayatları anlatan bir gezi günlüğü okuyordum geçenlerde. Yazarın, sarp yamaçlara tutunan ağaçlardan ve hırçın dalgalara göğüs geren kıyılardan bahsederken kullandığı ifadeler dikkatimi çekti. Doğanın bu boyun eğmez tavrının, orada yaşayan insanların karakterine nasıl işlediğini anlatıyordu.</p>
                     <blockquote>
-                        <p>"Hayat rüzgarı ne yönden eserse essin, kökleri sağlam olan ağaç yıkılmaz, sadece eğilir ve sonra tekrar doğrulur."</p>
+                        <p>"Toprak ne kadar sert, hava ne kadar çetin olursa olsun, hayat kendine bir yol buluyor; tıpkı kayaların arasından fışkıran o inatçı filizler gibi..."</p>
                     </blockquote>
-                    <p>Bu söz, karşılaştığımız zorluklara bakış açımızı değiştirebilecek nitelikte. Yazarın deneyimleri, umudun ve direncin en karanlık zamanlarda bile nasıl yeşerebileceğini <a href="#">gösteriyor</a>.</p>
+                    <p>Bu satırlar bana ister istemez içinde yaşadığımız bu güzel Karadeniz coğrafyasını hatırlattı. Dik yamaçlar, sürekli yağan yağmur, gelgitli deniz... Bütün bu doğal koşullar, buranın insanına da benzersiz bir direnç, pratik bir zeka ve mücadeleci bir ruh katmış sanki. Okuduğum bu kitap, doğa ile insan arasındaki o kopmaz bağ ve adaptasyon gücü üzerine tekrar düşünmemi sağladı. Zorlukların içinde bile bir güzellik ve yaşama gücü bulabilmek, sanırım doğanın bize fısıldadığı en önemli derslerden biri.</p>
                 </div>
-                <p class="kaynak">Kaynak: <strong>Örnek Anı Kitabı</strong>, Yazar Adı</p>
+                <p class="kaynak">Kaynak: <strong>Bir Gezginin Not Defteri (Örnek)</strong>, A. Gezgin</p>
             </article>
-
             <article class="blog-yazisi">
-                <h2>Seyahat Notlarından Bir Kesit</h2>
-                <p class="tarih">1 Nisan 2025</p>
+                <h2>Tarihin Fısıldadığı Küçük Şeyler</h2>
+                <p class="tarih">2 Nisan 2025</p>
                 <div class="icerik">
-                    <p>Bir seyahat yazarının kaleminden dökülenleri okurken adeta o yerlere gitmiş gibi olurum. Özellikle eski zamanlardaki yolculukları anlatan eserler, bugünün konforundan ne kadar farklı olduğunu gözler önüne seriyor. Aşağıdaki satırlar, bir zamanların İstanbul'unu ne güzel anlatmış:</p>
-                     <blockquote>
-                        <p>"Daracık sokaklarda yankılanan nal sesleri, cumbalı ahşap evler ve her köşeden yükselen tarih kokusu... İstanbul, masallardan fırlamış bir şehir gibiydi."</p>
+                    <p>Tarih kitapları genellikle büyük olaylara, savaşlara, krallara odaklanır. Ancak bazen okuduğum detaylı bir tarih araştırmasında karşıma çıkan küçücük bir ayrıntı, koca bir dönemi anlamak için generallerin stratejilerinden daha fazla şey anlatır bana. Geçenlerde okuduğum bir kitapta tam da böyle bir an yaşadım.</p>
+                    <blockquote>
+                        <p>"O dönemde başkentteki bir evin muhasebe defterinde, 'misafire ikram edilen bir fincan kahvenin' maliyetinin dahi özenle not edildiğini gördük. Bu küçük kayıt, dönemin ekonomik zorluklarını ve insan ilişkilerindeki nezaketi aynı anda yansıtıyordu."</p>
                     </blockquote>
-                     <p>Bu betimlemeler, şehrin o dönemki atmosferini zihnimizde canlandırmamıza yardımcı oluyor ve kaybolan değerleri düşünmeye itiyor.</p>
+                    <p>Sadece bir fincan kahve... Ama o küçücük detay, bize büyük anlatıların çoğu zaman gözden kaçırdığı gündelik hayatın ritmini, insanların değer yargılarını ve dönemin atmosferini fısıldıyor adeta. Tarihi sadece büyük olaylar üzerinden değil, bu tür insani 'küçük şeyler' üzerinden okumayı denediğimizde, geçmişle daha derin bir bağ kurabildiğimizi düşünüyorum. Bu yüzden okurken satır aralarında kalmış bu tür <a href="#">anekdotları</a> yakalamayı seviyorum.</p>
                 </div>
-                 <p class="kaynak">Kaynak: <strong>İstanbul Yazıları (Örnek)</strong>, Gezi Yazarı</p>
+                <p class="kaynak">Kaynak: <strong>Unutulmuş Yüzyılın İzleri (Örnek)</strong>, Dr. Tarihçi</p>
             </article>
-
-             </main>
+            </main>
     </div>
 
     <footer>
@@ -440,10 +307,10 @@
             const basaDonButonu = document.getElementById('basa-don');
             if(basaDonButonu) {
                 window.addEventListener('scroll', () => {
-                    basaDonButonu.classList.toggle('gorunur', window.pageYOffset > 350); // Biraz daha geç görünsün
+                    basaDonButonu.classList.toggle('gorunur', window.pageYOffset > 350);
                 });
             }
-            console.log("Okuduklarımdan Kalanlar scriptleri yüklendi! Karadeniz teması uygulandı.");
+            console.log("Okuduklarımdan Kalanlar scriptleri yüklendi! İçerikler eklendi.");
         });
     </script>
 
