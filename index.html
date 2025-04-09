@@ -386,49 +386,39 @@
             } catch (error) { console.error("Paylaşım butonları hatası:", error); }
 
             /**
-             * Koyu Mod (Dark Mode) Kontrolü
-             */
-            try {
-                const temaButonu = document.getElementById('theme-toggle'); // ID güncellendi
-                const body = document.body;
-                const tercihEdilenTema = localStorage.getItem('tema');
-                 function applyTheme(tema) {
-                     const sistemTercihiKoyu = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                     if (tema === 'dark' || (!tema && sistemTercihiKoyu)) { body.classList.add('dark-mode'); }
-                     else { body.classList.remove('dark-mode'); }
+            // --- Koyu Mod ---
+            const temaButonu = document.getElementById('tema-degistir');
+            const body = document.body;
+            const tercihEdilenTema = localStorage.getItem('tema');
+             function applyTheme(tema) {
+                 const sistemTercihiKoyu = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                 if (tema === 'dark' || (!tema && sistemTercihiKoyu)) { body.classList.add('dark-mode'); }
+                 else { body.classList.remove('dark-mode'); }
+             }
+             applyTheme(tercihEdilenTema);
+            if (temaButonu) {
+                temaButonu.addEventListener('click', () => {
+                    body.classList.toggle('dark-mode');
+                    const yeniTema = body.classList.contains('dark-mode') ? 'dark' : 'light';
+                    localStorage.setItem('tema', yeniTema);
+                });
+                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                     if (!localStorage.getItem('tema')) { applyTheme(e.matches ? 'dark' : 'light'); }
+                 });
+            }
+
+            // --- Başa Dön Butonu Görünürlüğü ---
+            const basaDonButonu = document.getElementById('basa-don');
+            if(basaDonButonu) {
+                 const scrollObserver = new IntersectionObserver(entries => {
+                     entries.forEach(entry => { basaDonButonu.classList.toggle('gorunur', entry.boundingClientRect.bottom < window.innerHeight * 0.5); }); // Yarıya gelince göster
+                 }, { threshold: [0] });
+                 const mainElement = document.querySelector('main');
+                 if(mainElement) scrollObserver.observe(mainElement);
+                 else { /* Fallback: eski yöntem */
+                      window.addEventListener('scroll', function() { basaDonButonu.classList.toggle('gorunur', window.pageYOffset > 400); });
                  }
-                 applyTheme(tercihEdilenTema);
-                if (temaButonu) {
-                    temaButonu.addEventListener('click', () => {
-                        body.classList.toggle('dark-mode');
-                        const yeniTema = body.classList.contains('dark-mode') ? 'dark' : 'light';
-                        localStorage.setItem('tema', yeniTema);
-                    });
-                     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                         if (!localStorage.getItem('tema')) { applyTheme(e.matches ? 'dark' : 'light'); }
-                     });
-                }
-            } catch (error) { console.error("Tema değiştirme hatası:", error); }
-
-
-            /**
-             * Başa Dön Butonu Görünürlüğü
-             */
-            try {
-                const basaDonButonu = document.getElementById('back-to-top'); // ID güncellendi
-                if(basaDonButonu) {
-                     const scrollObserver = new IntersectionObserver(entries => {
-                         entries.forEach(entry => { // Header viewport dışına çıkınca göster
-                             basaDonButonu.classList.toggle('visible', !entry.isIntersecting && window.pageYOffset > 200);
-                          });
-                     }, { threshold: [0] }); // Header'ın görünürlüğünü izle
-                     const headerElement = document.querySelector('.site-header');
-                     if(headerElement) scrollObserver.observe(headerElement);
-                     else { // Fallback
-                          window.addEventListener('scroll', function() { basaDonButonu.classList.toggle('visible', window.pageYOffset > 400); });
-                     }
-                }
-            } catch (error) { console.error("Başa dön butonu hatası:", error); }
+            }
 
             /**
              * Yazıların Görünürlük Animasyonu (Scroll ile)
