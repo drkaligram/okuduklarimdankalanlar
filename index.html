@@ -10,40 +10,40 @@
 
         /* --- CSS Değişkenleri (Yumuşak Yeşil Tema - Açık Mod Varsayılan) --- */
         :root {
-            --bg-main: #f7fafa;          /* Daha temiz ana arka plan */
+            --bg-main: #f7fafa;
             --bg-card: #ffffff;
-            --bg-aside-rgba: hsla(120, 20%, 98%, 0.85); /* Yan menü için yarı saydam (Glassmorphism) */
-            --bg-aside-fallback: #fdfefd;/* Fallback */
+            /* --bg-aside-rgba kaldırıldı */
+            --bg-aside: #fdfefd; /* Düz renk */
             --bg-code: #f2f5f2;
-            --text-main: #304d30;        /* Daha yumuşak koyu yeşil metin */
-            --text-secondary: #607d60;   /* Daha yumuşak ikincil metin */
+            --text-main: #304d30;
+            --text-secondary: #607d60;
             --text-blockquote: #557555;
-            --accent-primary: #3a863a;   /* Daha yumuşak ana yeşil */
-            --accent-secondary: #6ab07a; /* Daha yumuşak ikincil yeşil */
-            --accent-wood: #a07a5a;      /* Daha açık, az doygun ahşap */
+            --accent-primary: #3a863a;
+            --accent-secondary: #6ab07a;
+            --accent-wood: #a07a5a;
             --accent-highlight: #f5f0e8;
-            --border-color: #d8e8d8;     /* Daha yumuşak kenarlık */
-            --shadow-color: rgba(0, 80, 0, 0.06); /* Daha yumuşak gölge */
+            --border-color: #d8e8d8;
+            --shadow-color: rgba(0, 80, 0, 0.06);
             --shadow-hover-color: rgba(0, 80, 0, 0.1);
             --font-body: 'Merriweather', serif;
             --font-heading: 'Poppins', sans-serif;
-            --transition-speed: 0.3s; /* Biraz daha hızlı geçişler */
-            --border-radius-main: 12px; /* Daha yuvarlak köşeler */
+            --transition-speed: 0.3s;
+            --border-radius-main: 12px;
         }
 
         /* --- Koyu Mod Değişkenleri (Yumuşak) --- */
         body.dark-mode {
             --bg-main: #203020;
             --bg-card: #283f28;
-            --bg-aside-rgba: hsla(120, 15%, 15%, 0.75); /* Koyu mod glassmorphism */
-            --bg-aside-fallback: #243824;
+            /* --bg-aside-rgba kaldırıldı */
+            --bg-aside: #243824; /* Düz renk */
             --bg-code: #2f4f2f;
             --text-main: #ddece0;
             --text-secondary: #a0c0a0;
             --text-blockquote: #b0d0b0;
-            --accent-primary: #6ab07a; /* Açık modun ikincili */
-            --accent-secondary: #b0e0b0; /* Daha açık vurgu */
-            --accent-wood: #bfa080; /* Daha açık ahşap */
+            --accent-primary: #6ab07a;
+            --accent-secondary: #b0e0b0;
+            --accent-wood: #bfa080;
             --border-color: #506a50;
             --shadow-color: rgba(0, 0, 0, 0.2);
             --shadow-hover-color: rgba(0, 0, 0, 0.3);
@@ -67,7 +67,7 @@
         body.dark-mode a:focus-visible, body.dark-mode button:focus-visible, body.dark-mode input:focus-visible { outline-color: var(--accent-secondary); }
 
         /* --- Ana Layout (CSS Grid) --- */
-        .container { max-width: 1280px; /* Biraz daha geniş */ margin: 60px auto; padding: 0 40px; display: grid; grid-template-columns: 1fr 3fr; /* Oran ayarlandı */ gap: 60px; /* Boşluk artırıldı */ transition: padding var(--transition-speed) ease, gap var(--transition-speed) ease; }
+        .container { max-width: 1280px; margin: 60px auto; padding: 0 40px; display: grid; grid-template-columns: 1fr 3fr; gap: 60px; transition: padding var(--transition-speed) ease, gap var(--transition-speed) ease; }
         main, aside { min-width: 0; }
         main { grid-column: 2 / 3; }
         aside { grid-column: 1 / 2; position: sticky; top: 60px; align-self: start; }
@@ -76,56 +76,40 @@
         header {
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white; text-align: center; padding: 70px 30px 80px 30px; margin-bottom: 80px;
-            /* Daha yumuşak dalgalı clip-path */
-            clip-path: ellipse(120% 100% at 50% 0%); /* Basit elips kesim */
+            clip-path: ellipse(120% 100% at 50% 0%);
             position: relative; overflow: hidden; transition: background var(--transition-speed) ease;
         }
-        /* Desen kaldırıldı */
         header h1 { font-family: var(--font-heading); font-size: 3.3em; font-weight: 700; letter-spacing: 1px; margin-bottom: 15px; text-shadow: 2px 2px 6px rgba(0, 50, 0, 0.3); position: relative; z-index: 1; }
          header h1::after { content: ''; display: block; width: 90px; height: 4px; background: rgba(255, 255, 255, 0.6); margin: 20px auto 0 auto; border-radius: 3px; }
         header .site-slogani { font-family: var(--font-body); font-style: italic; font-size: 1.2em; opacity: 0.9; position: relative; z-index: 1; }
 
-        /* --- Yazar Profili (Aside) - Glassmorphism --- */
+        /* --- Yazar Profili (Aside) - Düz Renk --- */
         #profil {
-            background-color: var(--bg-aside-fallback); /* Fallback */
-            background-color: var(--bg-aside-rgba); /* Yarı saydam */
-            backdrop-filter: blur(10px); /* Buzlu cam efekti */
-            -webkit-backdrop-filter: blur(10px); /* Safari için */
+            background-color: var(--bg-aside); /* Düz renk */
+            /* backdrop-filter kaldırıldı */
             padding: 45px; border-radius: var(--border-radius-main);
             box-shadow: 0 8px 30px var(--shadow-color); text-align: center;
             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
             border: 1px solid var(--border-color);
-            /* background-image kaldırıldı, glass efekti yeterli */
-        }
-         /* Tarayıcı backdrop-filter desteklemiyorsa fallback */
-        @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-          #profil {
-            background-color: var(--bg-aside-fallback);
-          }
         }
         #profil:hover { transform: translateY(-8px); box-shadow: 0 12px 35px var(--shadow-hover-color); }
-        #profil img#profil-foto { width: 170px; /* Biraz daha büyük */ aspect-ratio: 1 / 1; object-fit: cover; border-radius: 50%; border: 8px solid var(--bg-card); box-shadow: 0 0 0 4px var(--accent-wood), 0 6px 20px var(--shadow-color); margin: 0 auto 35px auto; transition: transform var(--transition-speed) ease, box-shadow 0.4s ease, border-color var(--transition-speed) ease; }
+        #profil img#profil-foto { width: 170px; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 50%; border: 8px solid var(--bg-card); box-shadow: 0 0 0 4px var(--accent-wood), 0 6px 20px var(--shadow-color); margin: 0 auto 35px auto; transition: transform var(--transition-speed) ease, box-shadow 0.4s ease, border-color var(--transition-speed) ease; }
         body.dark-mode #profil img#profil-foto { border-color: var(--bg-card); }
         #profil img#profil-foto:hover { transform: scale(1.08) rotate(2deg); box-shadow: 0 0 0 4px var(--accent-wood), 0 10px 30px var(--shadow-hover-color); }
-        #profil h3 { font-family: var(--font-heading); color: var(--accent-primary); margin-bottom: 18px; font-size: 1.6em; font-weight: 600; /* Biraz daha ince */ transition: color var(--transition-speed) ease; }
+        #profil h3 { font-family: var(--font-heading); color: var(--accent-primary); margin-bottom: 18px; font-size: 1.6em; font-weight: 600; transition: color var(--transition-speed) ease; }
         #profil p { font-size: 1.05em; color: var(--text-secondary); line-height: 1.7; transition: color var(--transition-speed) ease; }
 
         /* --- Blog Yazıları (Anekdotlar) - Daha Yumuşak --- */
         .blog-yazisi {
-            background-color: var(--bg-card); margin-bottom: 70px; /* Boşluk artırıldı */ padding: 55px; /* İç boşluk artırıldı */
-            border-radius: var(--border-radius-main); box-shadow: 0 8px 30px var(--shadow-color); /* Gölge güncellendi */
+            background-color: var(--bg-card); margin-bottom: 70px; padding: 55px;
+            border-radius: var(--border-radius-main); box-shadow: 0 8px 30px var(--shadow-color);
             border: 1px solid var(--border-color); opacity: 0; transform: translateY(40px);
             transition: opacity 0.7s ease-out, transform 0.7s ease-out, box-shadow var(--transition-speed) ease, padding var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
             position: relative; overflow: hidden;
         }
-        .blog-yazisi::before { /* Sol kenar vurgu */
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; /* Daha ince */
-            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
-            transition: transform 0.5s ease, background var(--transition-speed) ease; transform: scaleY(0); transform-origin: bottom;
-            border-top-right-radius: 4px; border-bottom-right-radius: 4px; /* Hafif yuvarlaklık */
-        }
+        .blog-yazisi::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary)); transition: transform 0.5s ease, background var(--transition-speed) ease; transform: scaleY(0); transform-origin: bottom; border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
         .blog-yazisi:hover::before { transform: scaleY(1); transform-origin: top; }
-        .blog-yazisi:hover { box-shadow: 0 12px 40px var(--shadow-hover-color); } /* Hover gölgesi güncellendi */
+        .blog-yazisi:hover { box-shadow: 0 12px 40px var(--shadow-hover-color); }
         .blog-yazisi.gorunur { opacity: 1; transform: translateY(0); }
         .blog-yazisi.gorunur::before { transform: scaleY(1); transform-origin: bottom; transition-delay: 0.5s; }
 
@@ -136,14 +120,14 @@
         .etiketler { display: flex; flex-wrap: wrap; gap: 10px; margin-left: auto; }
         .etiket { display: inline-block; background-color: var(--bg-main); color: var(--text-secondary); padding: 5px 15px; border-radius: 18px; font-size: 0.85em; font-weight: 500; border: 1px solid var(--border-color); transition: all var(--transition-speed) ease; }
         .etiket:hover { background-color: var(--accent-secondary); color: white; border-color: var(--accent-secondary); transform: translateY(-2px); box-shadow: 0 2px 5px var(--shadow-color); }
-        body.dark-mode .etiket { background-color: var(--bg-aside-fallback); border-color: var(--border-color); color: var(--text-secondary); }
+        body.dark-mode .etiket { background-color: var(--bg-aside); border-color: var(--border-color); color: var(--text-secondary); } /* Koyu modda bg-aside kullan */
         body.dark-mode .etiket:hover { background-color: var(--accent-secondary); color: var(--bg-main); border-color: var(--accent-secondary); box-shadow: 0 2px 5px var(--shadow-color); }
 
-        .blog-yazisi h2 { font-family: var(--font-heading); color: var(--text-main); margin-bottom: 15px; /* Meta ile arayı aç */ font-size: 2.1em; /* Hafif büyüdü */ font-weight: 600; /* Biraz ince */ position: relative; padding-bottom: 0; word-break: break-word; transition: color var(--transition-speed) ease; }
-        .blog-yazisi h2::after { display: none; } /* Başlık altı çizgi kaldırıldı, meta altı çizgi yeterli */
+        .blog-yazisi h2 { font-family: var(--font-heading); color: var(--text-main); margin-bottom: 15px; font-size: 2.1em; font-weight: 600; position: relative; padding-bottom: 0; word-break: break-word; transition: color var(--transition-speed) ease; }
+        .blog-yazisi h2::after { display: none; } /* Başlık altı çizgi yok */
         .blog-yazisi .icerik { word-wrap: break-word; margin-top: 35px; }
-        .blog-yazisi .icerik p { margin-bottom: 1.8em; } /* Paragraf aralığı arttı */
-         .blog-yazisi .icerik p::first-letter { font-size: 3em; /* Biraz daha büyük */ color: var(--accent-primary); font-weight: bold; margin-right: 0.1em; float: left; line-height: 0.8; padding-right: 12px; padding-top: 8px; font-family: var(--font-body); transition: color var(--transition-speed) ease;}
+        .blog-yazisi .icerik p { margin-bottom: 1.8em; }
+         .blog-yazisi .icerik p::first-letter { font-size: 3em; color: var(--accent-primary); font-weight: bold; margin-right: 0.1em; float: left; line-height: 0.8; padding-right: 12px; padding-top: 8px; font-family: var(--font-body); transition: color var(--transition-speed) ease;}
         .blog-yazisi .kaynak { font-family: var(--font-heading); font-style: normal; font-size: 0.95em; color: var(--text-secondary); text-align: right; margin-top: 40px; border-top: 1px dashed var(--border-color); padding-top: 25px; font-weight: 500; word-break: break-word; transition: color var(--transition-speed) ease, border-color var(--transition-speed) ease;}
         .blog-yazisi .kaynak strong { color: var(--accent-wood); font-weight: 700; transition: color var(--transition-speed) ease;}
          .blog-yazisi blockquote { margin: 35px 0; padding: 30px 35px 30px 65px; background-color: var(--bg-main); border-left: none; position: relative; font-style: italic; color: var(--text-blockquote); border-radius: var(--border-radius-main); box-shadow: inset 4px 4px 8px rgba(0,0,0,0.03); border: 1px solid var(--border-color); word-wrap: break-word; transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease;}
@@ -154,57 +138,41 @@
 
         /* Paylaşım Butonları */
         .yazi-paylas { margin-top: 45px; padding-top: 30px; border-top: 1px dashed var(--border-color); text-align: right; transition: border-color var(--transition-speed) ease; }
-        .paylas-butonlari button { background: none; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 10px 18px; /* Daha büyük */ margin-left: 12px; border-radius: 25px; /* Daha yuvarlak */ cursor: pointer; font-family: var(--font-heading); font-size: 0.9em; font-weight: 500; transition: all var(--transition-speed) ease; display: inline-flex; align-items: center; gap: 8px; }
+        .paylas-butonlari button { background: none; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 10px 18px; margin-left: 12px; border-radius: 25px; cursor: pointer; font-family: var(--font-heading); font-size: 0.9em; font-weight: 500; transition: all var(--transition-speed) ease; display: inline-flex; align-items: center; gap: 8px; }
         .paylas-butonlari button svg { width: 1.1em; height: 1.1em; fill: currentColor; }
         .paylas-butonlari button:hover { background-color: var(--accent-secondary); color: white; border-color: var(--accent-secondary); transform: translateY(-3px); box-shadow: 0 4px 10px var(--shadow-color); }
         body.dark-mode .paylas-butonlari button { border-color: var(--border-color); color: var(--text-secondary); }
         body.dark-mode .paylas-butonlari button:hover { background-color: var(--accent-secondary); color: var(--bg-main); border-color: var(--accent-secondary); box-shadow: 0 4px 10px var(--shadow-color);}
 
         /* Link Stilleri */
-        a { color: var(--accent-primary); text-decoration: none; font-weight: 600; /* Biraz ince */ transition: color var(--transition-speed) ease, background-position var(--transition-speed) ease, background-size var(--transition-speed) ease; position: relative; word-break: break-word; background-image: linear-gradient(to right, var(--accent-secondary), var(--accent-secondary)); background-size: 0% 2px; background-repeat: no-repeat; background-position: left bottom 1px; padding-bottom: 3px; }
+        a { color: var(--accent-primary); text-decoration: none; font-weight: 600; transition: color var(--transition-speed) ease, background-position var(--transition-speed) ease, background-size var(--transition-speed) ease; position: relative; word-break: break-word; background-image: linear-gradient(to right, var(--accent-secondary), var(--accent-secondary)); background-size: 0% 2px; background-repeat: no-repeat; background-position: left bottom 1px; padding-bottom: 3px; }
         a:hover { color: var(--accent-secondary); background-size: 100% 2px; }
 
         /* --- Footer --- */
-        footer { text-align: center; margin-top: 90px; padding: 45px 30px; font-size: 1em; /* Biraz büyüdü */ color: var(--text-secondary); border-top: 6px solid var(--accent-wood); font-family: var(--font-heading); background-color: var(--bg-card); transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease; position: relative; }
+        footer { text-align: center; margin-top: 90px; padding: 45px 30px; font-size: 1em; color: var(--text-secondary); border-top: 6px solid var(--accent-wood); font-family: var(--font-heading); background-color: var(--bg-card); transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease; position: relative; }
 
         /* --- Sabit Butonlar (Tema ve Başa Dön) --- */
         #tema-degistir, #basa-don {
-            position: fixed;
-            bottom: 40px; /* Biraz daha yukarı */
-            width: 50px; height: 50px; /* Standart boyut */
-            background-color: var(--bg-card); /* Kart rengi */
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            font-size: 1.4em; /* İkon boyutu */
-            display: flex; /* İkonu ortalamak için */
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px var(--shadow-color);
-            opacity: 0; visibility: hidden; /* JS ile görünecek */
-            transform: translateY(15px) scale(0.9);
-            transition: all var(--transition-speed) ease;
+            position: fixed; bottom: 40px; width: 50px; height: 50px;
+            background-color: var(--bg-card); color: var(--text-secondary);
+            border: 1px solid var(--border-color); border-radius: 50%; font-size: 1.4em;
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            box-shadow: 0 5px 15px var(--shadow-color); opacity: 0; visibility: hidden;
+            transform: translateY(15px) scale(0.9); transition: all var(--transition-speed) ease;
             z-index: 1000;
         }
-        #tema-degistir { left: 40px; opacity: 1; visibility: visible; /* Tema butonu hep görünsün */ transform: translateY(0) scale(1); }
-        #basa-don { right: 40px; }
+        #tema-degistir { left: 40px; opacity: 1; visibility: visible; transform: translateY(0) scale(1); } /* Tema butonu hep görünsün */
+        #basa-don { right: 40px; } /* Başa dön sağda */
 
-        #tema-degistir.gorunur, #basa-don.gorunur { /* Görünürlük sadece başa dön için */
-            opacity: 0.9; visibility: visible; transform: translateY(0) scale(1);
+        #basa-don.gorunur { /* Görünürlük sadece başa dön için (JS ile kontrol edilir) */
+             opacity: 0.9; visibility: visible; transform: translateY(0) scale(1);
         }
 
         #tema-degistir:hover, #basa-don:hover {
-             opacity: 1;
-             background-color: var(--bg-main); /* Hover'da ana arka plan rengi */
-             color: var(--accent-primary);
-             transform: scale(1.08) translateY(-2px);
-             box-shadow: 0 8px 20px var(--shadow-hover-color);
+             opacity: 1; background-color: var(--bg-main); color: var(--accent-primary);
+             transform: scale(1.08) translateY(-2px); box-shadow: 0 8px 20px var(--shadow-hover-color);
         }
-         #tema-degistir svg, #basa-don svg { /* İkonlar için */
-             display: block; width: 1em; height: 1em; fill: currentColor;
-         }
-         /* Tema butonu ikon görünürlüğü */
+         #tema-degistir svg, #basa-don svg { display: block; width: 1em; height: 1em; fill: currentColor; }
         #tema-degistir .ikon-ay { display: none; }
         body.dark-mode #tema-degistir .ikon-gunes { display: none; }
         body.dark-mode #tema-degistir .ikon-ay { display: block; }
@@ -214,7 +182,7 @@
         /* === DUYARLILIK (RESPONSIVE) AYARLARI === */
         /* ========================================== */
         @media (max-width: 1280px) { .container { padding: 0 30px; gap: 50px; } }
-        @media (max-width: 1024px) { /* Tabletler - Tek Sütun */
+        @media (max-width: 1024px) { /* Tabletler */
             .container { grid-template-columns: 1fr; gap: 50px; padding: 0 30px; margin-top: 50px; }
             aside { grid-row: 1 / 2; position: static; width: 80%; max-width: 580px; margin: 0 auto 60px auto; padding: 40px; }
             main { grid-row: 2 / 3; }
@@ -238,13 +206,13 @@
         }
         @media (max-width: 480px) { /* Küçük Telefonlar */
              .container { padding: 0 15px; margin-top: 40px; gap: 30px; }
-             .blog-yazisi { padding: 30px 20px; } /* İç boşluk azaltıldı */
+             .blog-yazisi { padding: 30px 20px; }
              .blog-yazisi h2 { font-size: 1.6em; }
              .blog-yazisi .icerik p::first-letter { font-size: 2.6em; padding-top: 6px;}
              .blog-yazisi blockquote { padding: 25px 25px 25px 50px; }
              .blog-yazisi blockquote::before { font-size: 3.5em; left: 15px; top: 15px;}
              aside { width: 100%; border-radius: 0; border-left: none; border-right: none; margin-bottom: 40px; padding: 30px; }
-             header { clip-path: none; padding: 50px 20px 60px 20px; margin-bottom: 50px;} /* Header kesimi kaldırıldı */
+             header { clip-path: none; padding: 50px 20px 60px 20px; margin-bottom: 50px;}
              header h1 { font-size: 2.1em; }
              #profil img#profil-foto { width: 130px; }
              #tema-degistir, #basa-don { width: 45px; height: 45px; font-size: 1.2em; bottom: 20px; }
@@ -268,7 +236,7 @@
             main { width: 100%; }
             .blog-yazisi { box-shadow: none; border: none; padding: 0; margin-bottom: 30px; page-break-inside: avoid; }
             .yazi-meta { margin-bottom: 15px; font-size: 10pt; color: #444; border: none; padding-bottom: 5px;}
-            .okuma-suresi, .tarih { display: inline; margin-right: 15px; }
+            .okuma-suresi, .tarih { display: inline; margin-right: 15px; } .ikon { display: none; } /* İkonları yazdırmada gizle */
             .blog-yazisi h2 { font-size: 18pt; color: #000; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #ccc; }
             blockquote { border-left: 3px solid #ccc; padding: 10px 15px; margin: 15px 0; background: #f4f4f4; color: #333; font-style: italic; }
             blockquote::before { display: none; }
@@ -276,6 +244,7 @@
             .kaynak { text-align: left; font-size: 10pt; color: #555; margin-top: 15px; border-top: 1px solid #eee; padding-top: 8px;}
             .kaynak strong { color: #000; }
         }
+
     </style>
 </head>
 <body class=""> <header>
@@ -292,7 +261,7 @@
 
         <main id="yazilar">
 
-            <article class="blog-yazisi" id="yazi-1">
+             <article class="blog-yazisi" id="yazi-1">
                 <h2>Doğanın Öğrettiği Direnç</h2>
                 <div class="yazi-meta">
                      <span class="tarih"><span class="ikon" aria-hidden="true">📅</span> 9 Nisan 2025</span>
@@ -339,13 +308,14 @@
 
     <footer>
         <p>&copy; 2025 Okuduklarımdan Kalanlar | Tüm hakları saklıdır.</p>
-        </footer>
+    </footer>
 
     <button id="tema-degistir" aria-label="Temayı Değiştir">
-         <svg class="ikon-gunes" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.64 5.64c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l1.06 1.06c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41L5.64 5.64zm12.73 12.73c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l1.06 1.06c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41l-1.06-1.06zm1.06-10.61c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l1.06-1.06zm-12.73 12.73c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l1.06-1.06z"/></svg>
-         <svg class="ikon-ay" viewBox="0 0 24 24"><path d="M9.37 5.51A7.35 7.35 0 0 0 9.1 7.5c0 4.08 3.32 7.4 7.4 7.4.68 0 1.35-.09 1.99-.27A7.014 7.014 0 0 1 12 19c-3.86 0-7-3.14-7-7 0-2.93 1.81-5.45 4.37-6.49z"/></svg>
+         <svg class="ikon-gunes" viewBox="0 0 24 24" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.64 5.64c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l1.06 1.06c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41L5.64 5.64zm12.73 12.73c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l1.06 1.06c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41l-1.06-1.06zm1.06-10.61c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l1.06-1.06zm-12.73 12.73c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l1.06-1.06z"/></svg>
+         <svg class="ikon-ay" viewBox="0 0 24 24" fill="currentColor"><path d="M9.37 5.51A7.35 7.35 0 0 0 9.1 7.5c0 4.08 3.32 7.4 7.4 7.4.68 0 1.35-.09 1.99-.27A7.014 7.014 0 0 1 12 19c-3.86 0-7-3.14-7-7 0-2.93 1.81-5.45 4.37-6.49z"/></svg>
     </button>
-    <a href="#" id="basa-don" aria-label="Başa dön"> <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    <a href="#" id="basa-don" aria-label="Başa dön">
+         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
     </a>
 
     <script>
@@ -358,16 +328,15 @@
                 const icerikDiv = yazi.querySelector('.icerik');
                 const okumaSuresiSpan = yazi.querySelector('.okuma-suresi');
                 if (icerikDiv && okumaSuresiSpan) {
-                    const text = icerikDiv.textContent || icerikDiv.innerText || "";
-                    const kelimeSayisi = text.trim().split(/\s+/).filter(Boolean).length; // Daha doğru kelime sayımı
+                    const text = icerikDiv.textContent || "";
+                    const kelimeSayisi = text.trim().split(/\s+/).filter(Boolean).length;
                     const dakika = Math.ceil(kelimeSayisi / wpm);
-                    // İkonun yanına ekle, mevcut içeriği silme
                     const spanTextNode = document.createTextNode(` ${dakika} dk okuma`);
-                     if (okumaSuresiSpan.childNodes.length > 1) { // Eğer ikon varsa
-                         okumaSuresiSpan.appendChild(spanTextNode);
-                     } else { // Eğer sadece ikon varsa veya boşsa
-                         okumaSuresiSpan.innerHTML += ` ${dakika} dk okuma`;
-                     }
+                    if (okumaSuresiSpan.childNodes.length > 0 && okumaSuresiSpan.childNodes[0].nodeType === Node.ELEMENT_NODE) { // İkon varsa sonrasına ekle
+                        okumaSuresiSpan.appendChild(spanTextNode);
+                    } else { // İkon yoksa veya span boşsa
+                         okumaSuresiSpan.textContent += ` ${dakika} dk okuma`;
+                    }
                 }
             });
 
@@ -383,16 +352,16 @@
                 if (linkKopyalaButon && yaziId) {
                     linkKopyalaButon.addEventListener('click', (e) => {
                         const button = e.currentTarget;
-                        const urlToCopy = `${window.location.origin}${window.location.pathname}#${yaziId}`; // Base URL + path + #id
+                        const urlToCopy = `${window.location.origin}${window.location.pathname}#${yaziId}`;
                         navigator.clipboard.writeText(urlToCopy).then(() => {
-                            const originalContent = button.innerHTML; // Save original SVG + Text
-                            button.innerHTML = 'Kopyalandı!'; // Just text
+                            const originalContent = button.innerHTML;
+                            button.textContent = 'Kopyalandı!'; // Sadece metin göster
                             button.disabled = true;
                             setTimeout(() => {
-                                button.innerHTML = originalContent; // Restore SVG + Text
+                                button.innerHTML = originalContent; // SVG'yi geri yükle
                                 button.disabled = false;
                             }, 2500);
-                        }).catch(err => { console.error('Link kopyalanamadı: ', err); /* Opsiyonel: Hata mesajı göster */ });
+                        }).catch(err => { console.error('Link kopyalanamadı: ', err); });
                     });
                 }
 
@@ -405,20 +374,20 @@
                 }
             });
 
-
             // --- Koyu Mod (Dark Mode) Kontrolü ---
             const temaButonu = document.getElementById('tema-degistir');
             const body = document.body;
             const tercihEdilenTema = localStorage.getItem('tema');
 
              function applyTheme(tema) {
-                 if (tema === 'dark') {
+                 // Sistem tercihini kontrol et (eğer kayıtlı tercih yoksa)
+                 const sistemTercihiKoyu = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                 if (tema === 'dark' || (!tema && sistemTercihiKoyu)) {
                      body.classList.add('dark-mode');
                  } else {
                      body.classList.remove('dark-mode');
                  }
              }
-
              applyTheme(tercihEdilenTema); // Sayfa yüklenince temayı uygula
 
             if (temaButonu) {
@@ -426,41 +395,42 @@
                     body.classList.toggle('dark-mode');
                     const yeniTema = body.classList.contains('dark-mode') ? 'dark' : 'light';
                     localStorage.setItem('tema', yeniTema);
-                    // Opsiyonel: Diğer elementlerin temasını anında güncellemek için ek JS gerekebilir
-                    // Örneğin scrollbar renkleri gibi anında değişmeyenler için. Genellikle CSS yeterli olur.
                 });
+                 // Sistem teması değişirse de güncelle (isteğe bağlı)
+                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                     if (!localStorage.getItem('tema')) { // Sadece kullanıcı manuel seçim yapmadıysa
+                         applyTheme(e.matches ? 'dark' : 'light');
+                     }
+                 });
             }
 
-            // --- Başa Dön Butonu Kontrolü ---
+            // --- Başa Dön Butonu Görünürlük Kontrolü ---
             const basaDonButonu = document.getElementById('basa-don');
             if(basaDonButonu) {
-                 // Görünürlük kontrolü
-                 const observerOptions = { rootMargin: '200px 0px 0px 0px' }; // Ekranın üstünden 200px aşağı inince görünsün
                  const scrollObserver = new IntersectionObserver(entries => {
                      entries.forEach(entry => {
-                         // Body'nin üstü ekrandan çıkınca butonu göster
-                         basaDonButonu.classList.toggle('gorunur', !entry.isIntersecting);
+                         // Body'nin üstü viewport'un %80 yukarısında kalınca göster
+                         basaDonButonu.classList.toggle('gorunur', entry.boundingClientRect.bottom < window.innerHeight * 0.2);
                      });
-                 }, observerOptions);
-                 scrollObserver.observe(document.body); // Body'nin başlangıcını gözlemle
-
-                // Başa dönme işlevi a href="#" ile sağlanıyor, ek JS gerekmez
+                 }, { threshold: [0] }); // Girdiği ve çıktığı anı yakala
+                 // Gözlemlemek için header'dan sonraki bir elemanı veya main'i kullanmak daha iyi olabilir
+                 const mainElement = document.querySelector('main');
+                 if(mainElement) scrollObserver.observe(mainElement);
             }
 
             // --- Görünürlük Animasyonu (Intersection Observer) ---
             const blogYazilariAnim = document.querySelectorAll('.blog-yazisi');
             if (blogYazilariAnim.length > 0) {
-                const animObserverOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 }; // Ekranın %10 altına gelince başlasın
+                const animObserverOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 };
                 const animObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) { entry.target.classList.add('gorunur'); }
-                        // else { entry.target.classList.remove('gorunur'); } // Ekrandan çıkınca tekrar gizle (opsiyonel)
                     });
                 }, animObserverOptions);
                 blogYazilariAnim.forEach(yazi => { animObserver.observe(yazi); });
             }
 
-            console.log("Okuduklarımdan Kalanlar scriptleri yüklendi! Modern & Yumuşak tema.");
+            console.log("Okuduklarımdan Kalanlar scriptleri yüklendi! Tek dosya uyumlu, modern & yumuşak tema.");
         });
     </script>
 
